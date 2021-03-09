@@ -1,7 +1,7 @@
 import { useUser } from '@auth0/nextjs-auth0'
 import { useEffect } from 'react'
 
-const Index = () => {
+const Index = ({FUNCTIONS_BASE_URL}) => {
 	const { user, error, isLoading } = useUser()
 
 	if (isLoading) return <div>Loading...</div>
@@ -12,7 +12,7 @@ const Index = () => {
 
     if(localStorage) {
       if(!getUserToken()) {
-        setUserToken(sub).then((data) => {
+        setUserToken(FUNCTIONS_BASE_URL, sub).then((data) => {
           console.log('user: ', data)
           localStorage.setItem('twitterThreadsToken', JSON.stringify(data))
         })
@@ -37,8 +37,18 @@ const Index = () => {
 }
 
 
-async function setUserToken(userId) {
-    const data = await fetch(`http://localhost:9000/.netlify/functions/get-user?id=${userId}`)
+
+export async function getStaticProps() {
+	const { FUNCTIONS_BASE_URL } = process.env
+	return {
+		props: {
+			FUNCTIONS_BASE_URL,
+		},
+	}
+}
+
+async function setUserToken(BASE_URL, userId) {
+    const data = await fetch(`${BASE_URL}/get-user?id=${userId}`)
     const json = await data.json()
     console.log('json: ', json)
     const {data: {identities}} = json
