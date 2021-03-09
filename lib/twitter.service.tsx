@@ -1,11 +1,13 @@
-function sendTweetRequest(BASE_URL, tokens, tweet) {
+import tweetSplitter from 'twitter-splitter'
+
+function sendTweetRequest(BASE_URL, tokens, tweets) {
 	return new Promise(async (resolve, reject) => {
-		if (tokens.hasOwnProperty('accessToken') && tokens.hasOwnProperty('accessTokenSecret') && tweet) {
+		if (tokens.hasOwnProperty('accessToken') && tokens.hasOwnProperty('accessTokenSecret') && tweets) {
 			const { accessToken, accessTokenSecret } = tokens
 			try {
 				const data = await fetch(`${BASE_URL}/post-tweet?ut=${accessToken}&uts=${accessTokenSecret}`, {
 					method: 'POST',
-					body: JSON.stringify({ message: tweet }),
+					body: JSON.stringify({ messages: tweets }),
 					headers: {
 						'Content-Type': 'application/json',
 					},
@@ -22,7 +24,7 @@ function sendTweetRequest(BASE_URL, tokens, tweet) {
 			console.error('data is missing for sending a tweet: ', {
 				BASE_URL,
 				tokens,
-				tweet,
+				tweets,
 			})
 		}
 	})
@@ -61,4 +63,17 @@ function getUserToken() {
 	return data ? JSON.parse(data) : {}
 }
 
-export { sendTweetRequest, setUserToken, getUserToken }
+function textToTweets(inputTxt: string): string[] {
+	const input = inputTxt.split('\n\n')
+	const filtered = input.filter((item) => {
+		console.log('item: ', item)
+		return item.length > 0
+	})
+	const split = filtered.map((string) => tweetSplitter(string, 276, ''))
+
+	const flat = [].concat(...split)
+
+	return flat
+}
+
+export { sendTweetRequest, setUserToken, getUserToken, textToTweets }

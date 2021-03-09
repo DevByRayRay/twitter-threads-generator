@@ -12,7 +12,7 @@ exports.handler = async function (event, context) {
     // your server-side functionality
     const { ut, uts } = event.queryStringParameters
     const parsedBody = JSON.parse(event?.body)
-    const { message } = parsedBody
+    const { messages } = parsedBody
     const thread = THREAD(ut, uts)
 
     try {
@@ -28,12 +28,16 @@ exports.handler = async function (event, context) {
                 text: `“Happiness is a quality of the soul…not a function of one’s material circumstances.”
             – Aristotle`}
         ];
-        
-        const tweets = await thread.tweetThread(messages)
-        console.log("🚀 ~ file: post-tweet.js ~ line 33 ~ tweets", tweets)
-        
-        // const post = await twitter.post('statuses/update', { status: message })
-        // const { data } = post
+
+        let tweets = null
+
+        if (Array.isArray(messages)) {
+            tweets = await thread.tweetThread(messages)
+        } else {
+            tweets = await thread.tweetThread([messages])
+        }
+        console.log("tweets", tweets)
+
         return {
             statusCode: 200,
             headers,

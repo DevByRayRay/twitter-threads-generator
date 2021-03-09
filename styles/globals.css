@@ -1,21 +1,158 @@
+:root {
+  --header-height: calc(48px + 2rem);
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 * {
   box-sizing: border-box;
 }
 
-.text {
-  width: 400px;
-  height: 200px;
+
+body {
+	margin: 0;
 }
+body * {
+	font-size: 1.1rem;
+}
+
+body {
+	background: #2c3e50;
+	color: #ccc;
+}
+a {
+	color: #ccc;
+}
+a:hover {
+	text-decoration: none;
+}
+p {
+  margin: 0 0;
+}
+
+button {
+  outline: 0;
+  border: 0;
+}
+.page {
+  display: grid;
+  grid-template-rows: 80px 1fr;
+  overflow: hidden;
+  height: 100vh;
+}
+.container {
+	display: grid;
+	width: 100%;
+	grid-template-columns: 1fr 1fr;
+	overflow: hidden;
+  padding-top: 1rem;
+}
+
+.header,
+.footer {
+	text-align: center;
+}
+
+.column .footer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+.column .footer button {
+  width: 100%;
+  height: auto;
+  background: rgb(0, 229, 255);
+}
+h1 {
+	font-size: 2rem;
+}
+.column {
+	display: grid;
+	grid-template-rows: 10fr 47px;
+	grid-template-columns: 1fr;
+}
+.column--input {
+  padding-left: 1rem;
+}
+.column--output {
+	padding: 0 2rem;
+	overflow: auto;
+}
+.column textarea {
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+	height: auto;
+	box-sizing: border-box;
+  white-space: break-spaces;
+  padding: 1rem 1.2rem;
+}
+
+#output {
+	white-space: break-spaces;
+	padding: 2rem;
+	border: 1px solid #fff;
+}
+
+.tweet {
+	display: grid;
+	grid-template-columns: 48px 1fr;
+	gap: 1rem;
+	margin-bottom: 2rem;
+}
+
+.tweet__profile {
+  width: 48px;
+  height: 48px;
+	border-radius: 50%;
+  background-size: contain;
+}
+.tweet__content {
+	padding-top: 0.6rem;
+	padding-bottom: 2rem;
+	line-height: 1.6em;
+	position: relative;
+	border-bottom: 1px solid #1e2b3a;
+}
+.tweet__content button {
+  position: absolute;
+  bottom: 2;
+  right: 0;
+}
+.tweet__header {
+	display: flex;
+	justify-content: space-between;
+}
+.tweet__header em {
+	margin-right: 1rem;
+}
+
+.tweet__content:before {
+	content: '';
+	display: block;
+	background: #ccc;
+	width: 2px;
+	height: 100%;
+	position: absolute;
+	top: 46px;
+	left: -41px;
+	z-index: -1;
+}
+
+.tweet:last-child .tweet__content:before {
+	height: 0;
+}
+
+.tweet__footer {
+  width: 100%;
+  height: 2rem;
+  color: rgb(12, 162, 12);
+}
+
