@@ -1,6 +1,6 @@
 import { useUser } from '@auth0/nextjs-auth0'
 import Head from 'next/head'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { sendTweetRequest, setUserToken, getUserToken, textToTweets } from '../lib/twitter.service'
@@ -53,47 +53,46 @@ Wherever possible, you must remove toxic relationships from your life, regardles
 `
 
 export enum sendState {
-  sending = 'sending',
-  recieved = 'recieved',
-  error = 'error',
-  null = null
+	sending = 'sending',
+	recieved = 'recieved',
+	error = 'error',
 }
 export interface iSendingState {
-  state: sendState
+	state: sendState
 }
 
 const StatusMessage = styled.div<iSendingState>`
-  display: inline-block;
-  color: #fff;
-  ${(props) => {
-    if(props.state === sendState.sending) {
-      return 'background-color: orange;'
-    }
-    if(props.state === sendState.recieved) {
-      return 'background-color: green;'
-    }
-    if(props.state === sendState.error) {
-      return 'background-color: red;'
-    }
-  }};
+	display: inline-block;
+	color: #fff;
+	${(props) => {
+		if (props.state === sendState.sending) {
+			return 'background-color: orange;'
+		}
+		if (props.state === sendState.recieved) {
+			return 'background-color: green;'
+		}
+		if (props.state === sendState.error) {
+			return 'background-color: red;'
+		}
+	}};
 `
 
 const SendStatus = (props: iSendingState) => {
-  switch (props.state) {
-    case 'sending':
-      return (<StatusMessage>Sending</StatusMessage>)
-      break;
-    case 'recieved':
-      return (<StatusMessage>Recieved</StatusMessage>)
-      break;
-    case 'error':
-      return (<StatusMessage>Error</StatusMessage>)
-      break;
-  
-    default:
-      return (<span></span>)
-      break;
-  }
+	switch (props.state) {
+		case 'sending':
+			return <StatusMessage>Sending</StatusMessage>
+			break
+		case 'recieved':
+			return <StatusMessage>Recieved</StatusMessage>
+			break
+		case 'error':
+			return <StatusMessage>Error</StatusMessage>
+			break
+
+		default:
+			return <span></span>
+			break
+	}
 }
 
 const Index = ({ FUNCTIONS_BASE_URL }) => {
@@ -102,13 +101,13 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
 	const [send, setSend] = useState<boolean | null>()
 	const [renderedTweets, setRenderedTweets] = useState([])
 	const [postedTweets, setPostedTweets] = useState<any[]>([])
-	const [sendingTweet, setSendingTweet] = useState<sendState>(sendState.null)
+	const [sendingTweet, setSendingTweet] = useState<sendState | null>(null)
 	const [tweet, setTweet] = useState(DEFAULT_TWEET)
-  let sending : sendState = sendState.null
+	let sending: sendState | null = null
 
-  useEffect(() => {
-    generateTweets()
-  }, [])
+	useEffect(() => {
+		generateTweets()
+	}, [])
 
 	// Event for updating the tweet state
 	const onChangeTweet = (event) => {
@@ -122,26 +121,26 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
 
 		const tokens = getUserToken()
 
-    sending = sendState.sending
+		sending = sendState.sending
 		sendTweetRequest(FUNCTIONS_BASE_URL, tokens, renderedTweets)
-			.then((tweetsArr) => {
+			.then((tweetsArr: any[]) => {
 				setSend(true)
 				setPostedTweets(tweetsArr)
-        setSendingTweet(sendState.recieved)
-        setTimeout(() => {
-          setSendingTweet(sendState.null)
-        }, 3000)
+				setSendingTweet(sendState.recieved)
+				setTimeout(() => {
+					setSendingTweet(null)
+				}, 3000)
 			})
 			.catch((error) => {
 				console.error('Didnt send!')
 				setSend(false)
-        setSendingTweet(sendState.error)
+				setSendingTweet(sendState.error)
 			})
 	}
 
 	function generateTweets() {
 		const tweets = textToTweets(tweet, true)
-    setRenderedTweets(tweets)
+		setRenderedTweets(tweets)
 		console.log('tweets: ', tweets)
 	}
 
@@ -161,63 +160,63 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
 		}
 
 		return (
-			<div className="page">
+			<div className='page'>
 				<Head>
 					<title>Social Uniqorn</title>
 					<meta property='og:title' content='Social Uniqorn' key='title' />
 					<meta name='viewport' content='initial-scale=1.0, width=device-width' />
 				</Head>
-					<PageHeader>
-						<HeaderUser>
-							<Avatar src={picture} loading='lazy' />
-							<HeaderUsername>Welcome {name.substr(0, 13)}</HeaderUsername>
-						</HeaderUser>
+				<PageHeader>
+					<HeaderUser>
+						<Avatar src={picture} loading='lazy' />
+						<HeaderUsername>Welcome {name.substr(0, 13)}</HeaderUsername>
+					</HeaderUser>
 
-						<HeaderName className='header'>
-							<H1>Social Uniqorn</H1>
-						</HeaderName>
-						<HeaderRight>
-							<a href='/api/auth/logout'>Logout</a>
-						</HeaderRight>
-					</PageHeader>
+					<HeaderName className='header'>
+						<H1>Social Uniqorn</H1>
+					</HeaderName>
+					<HeaderRight>
+						<a href='/api/auth/logout'>Logout</a>
+					</HeaderRight>
+				</PageHeader>
 
-					<div className='container'>
-						<div className='column column--input'>
-							{/* <textarea name="inputText" id="inputText" cols="" rows="" className="input"></textarea> */}
-							<textarea onChange={onChangeTweet} value={tweet} className='text input'></textarea>
-							<footer className='footer'>
-								<button id='generate' onClick={generateTweets}>
-									Generate Thread
-								</button>
-							</footer>
-						</div>
-						<div className='column column--output'>
-							<div id='output'>
-                {renderedTweets && renderedTweets.map((item, index) => {
-                  return (
-                    <div key={index} className="tweet">
-                      <Avatar src={picture} loading='lazy' />
-                      <div className="tweet__content">{item}</div>
-                    </div>
-                  )
-                })}
-              </div>
-							<footer className="footer">
-                <button id='generate' onClick={sendTweet}>
-                  Send Thread <SendStatus state={sendingTweet}></SendStatus>
-                </button>
-              </footer>
-							
-						</div>
-
-            <footer className='footer'>
-								Build by{' '}
-								<a href='https://byrayray.dev' target='_blank' title='DevByRayRay'>
-									DevByRayRay
-								</a>{' '}
-								| <span id='date'></span>
-							</footer>
+				<div className='container'>
+					<div className='column column--input'>
+						{/* <textarea name="inputText" id="inputText" cols="" rows="" className="input"></textarea> */}
+						<textarea onChange={onChangeTweet} value={tweet} className='text input'></textarea>
+						<footer className='footer'>
+							<button id='generate' onClick={generateTweets}>
+								Generate Thread
+							</button>
+						</footer>
 					</div>
+					<div className='column column--output'>
+						<div id='output'>
+							{renderedTweets &&
+								renderedTweets.map((item, index) => {
+									return (
+										<div key={index} className='tweet'>
+											<Avatar src={picture} loading='lazy' />
+											<div className='tweet__content'>{item}</div>
+										</div>
+									)
+								})}
+						</div>
+						<footer className='footer'>
+							<button id='generate' onClick={sendTweet}>
+								Send Thread <SendStatus state={sendingTweet}></SendStatus>
+							</button>
+						</footer>
+					</div>
+
+					<footer className='footer'>
+						Build by{' '}
+						<a href='https://byrayray.dev' target='_blank' title='DevByRayRay'>
+							DevByRayRay
+						</a>{' '}
+						| <span id='date'></span>
+					</footer>
+				</div>
 			</div>
 		)
 	}
