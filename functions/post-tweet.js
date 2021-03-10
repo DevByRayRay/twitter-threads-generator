@@ -17,36 +17,42 @@ exports.handler = async function (event, context) {
 
     try {
 
-        const messages = [
-            {
-                text: `“The greatest discovery of all time is that a person can change his future by merely changing his attitude.”
-            – Oprah Winfrey`},
-            {
-                text: `“It’s a funny thing about life, once you begin to take note of the things you are grateful for, you begin to lose sight of the things that you lack.”
-            – Germany Kent`},
-            {
-                text: `“Happiness is a quality of the soul…not a function of one’s material circumstances.”
-            – Aristotle`}
-        ];
+        // const messages = [
+        //     {
+        //         text: `“The greatest discovery of all time is that a person can change his future by merely changing his attitude.”
+        //     – Oprah Winfrey`},
+        //     {
+        //         text: `“It’s a funny thing about life, once you begin to take note of the things you are grateful for, you begin to lose sight of the things that you lack.”
+        //     – Germany Kent`},
+        //     {
+        //         text: `“Happiness is a quality of the soul…not a function of one’s material circumstances.”
+        //     – Aristotle`}
+        // ];
 
-        let tweets = null
+        console.log("🚀 ~ file: post-tweet.js ~ line 16 ~ messages", messages)
+        let tweets = Array.isArray(messages) ? messages : [messages]
+        const mappedTweets = tweets.map((tweetItem) => {
+            return {
+                text: tweetItem
+            }
+        })
 
-        if (Array.isArray(messages)) {
-            tweets = await thread.tweetThread(messages)
-        } else {
-            tweets = await thread.tweetThread([messages])
-        }
-        console.log("tweets", tweets)
+        console.log("mappedTweets", mappedTweets)
+        console.log("mappedTweets", mappedTweets.length)
+        const sendTweetRequest = await thread.tweetThread(mappedTweets)
+
+        console.log("sendTweetRequest", sendTweetRequest.length)
+        console.log("sendTweetRequest", sendTweetRequest)
 
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
                 // data,
-                tweets: tweets || []
+                tweets: sendTweetRequest || []
             })
         }
-        
+
     } catch (error) {
         console.error(error)
         return {
@@ -69,12 +75,12 @@ async function tweetThread(client, thread) {
             tweetConf.auto_populate_reply_metadata = true
             tweetConf.in_reply_to_status_id = lastTweetID[index - 1]
         }
-        
+
         console.log('status: ', tweetConf)
         const tweet = await client.post("statuses/update", tweetConf);
         lastTweetID.push(tweet.id_str);
     })
 
     return Promise.all(tweets)
-  }
+}
 

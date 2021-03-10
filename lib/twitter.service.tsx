@@ -63,7 +63,7 @@ function getUserToken() {
 	return data ? JSON.parse(data) : {}
 }
 
-function textToTweets(inputTxt: string): string[] {
+function textToTweets(inputTxt: string, prefix: boolean): string[] {
 	const input = inputTxt.split('\n\n')
 	const filtered = input.filter((item) => {
 		console.log('item: ', item)
@@ -73,7 +73,12 @@ function textToTweets(inputTxt: string): string[] {
 
 	const flat = [].concat(...split)
 
-	return flat
+	const addNumbers = flat.map((tweetItem, index) => {
+		const prefixNr = prefix ? `${index + 1}/${flat.length} ` : ''
+		return `${prefixNr}${tweetItem}`
+	})
+
+	return addNumbers
 }
 
 export { sendTweetRequest, setUserToken, getUserToken, textToTweets }

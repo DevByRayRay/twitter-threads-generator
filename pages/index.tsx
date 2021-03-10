@@ -43,58 +43,58 @@ const HeaderUser = styled.div`
 const HeaderUsername = styled.div``
 const HeaderName = styled.div``
 
-const DEFAULT_TWEET = `# 5 Development Retrospective Questions to Have Great Discussions
-1️⃣What Were Our Strengths?
-I’ve seen it a lot! Doing a proper retrospective is not all about discovering the negative things — or rather what can be improved.
+const DEFAULT_TWEET = `Surround yourself with the right people
+Jim Rohn famously said that you are the average of the five people you spend the most time with. There is an inherent truth to that, as we, as social creatures, pick up on the habits, behaviors, and attitudes of those around us. 
 
-Let’s focus a part of the retrospective on the things we did well!
-That will make sure everyone feels empowered right away.
-If you throw this question to your team, you will find that everyone has a different view of what went well.
+What that means is that if you want the strength and positivity to get through anything, you must keep your circle of friends and associates as healthy as you can.
 
-2️⃣ What Were Our Biggest Obstacles?
-It’s also good to talk about the sprint’s obstacles.
-In this case, I don’t mean what we did wrong as a team! I mean, what happened that the team didn’t know before? You know, unexpected things.
+Wherever possible, you must remove toxic relationships from your life, regardless of how tough it may be. And in situations such as work where you many not have control, you must learn how to practice positivity so its spreads to those around you. #socialuniqorn
 
-Sometimes, production issues pop up out of nowhere.
-My team and I experienced that last week! It was a disaster, but it was only because the users started using new features we just introduced.
-
-So the lesson was to prepare some time to stay on standby if new features go into production.
-But sometimes, the obstacles come from outside the team. It’s important to talk about that with each other.
-
-3️⃣How Can We Improve Our Code Quality?
-For most developers, code quality is a serious thing.
-But instead of checking what kind of ugly code we have in our applications, we should think about how we can improve the code.
-
-Yes, you probably have tools and systems in place.
-But I know for sure you and your team can come up with some very simple improvements — things that don’t cost a lot of time.
-
-That’s why I think it’s a good idea to spend some time during one of your retrospective meetings on code quality. We all want to write readable code in our applications.
-
-4️⃣Who Helped You During This Sprint?
-Let’s spend some time on the human part of the development team. We are developers (sorry if you’re not, but you’re probably working with some) who focus on the technical aspect of our job.
-
-Being a developer in a team is so much more than only the technical part. We have to collaborate and communicate with each other.
-
-Spending time to offer some appreciation to one of your team members can be useful for team bonding. Just say that it felt incredible when a teammate helped you out with a difficult task.
-
-Everyone needs a compliment — no matter how good you are as a developer. It will brighten someone’s day!
-
-5️⃣How Can We Improve Our Retrospectives?
-I think retrospectives are vital for a development team. And it is just as important for a team to determine how they can improve their retrospectives.
-
-There are many approaches available on the web:
-- The Good, Bad & Ugly
-- Liked — Learned — Lacked — Longed For
-- One-Word Exercise
-- KALM
-
-I like one where the Scrum leader selects a few questions to bring to the team to discuss. Document this. It’s always good to look back at what you have discussed with the team.
-
-6️⃣Conclusion
-I hope this article will help you and your team have better retrospectives. When a retrospective has the right ingredients and the proper discussions, we grow as a team.
-
-👉Read my post here: https://betterprogramming.pub/5-development-retrospective-questions-to-have-great-discussions-aa77f96cf793
 `
+
+export enum sendState {
+  sending = 'sending',
+  recieved = 'recieved',
+  error = 'error',
+  null = null
+}
+export interface iSendingState {
+  state: sendState
+}
+
+const StatusMessage = styled.div<iSendingState>`
+  display: inline-block;
+  color: #fff;
+  ${(props) => {
+    if(props.state === sendState.sending) {
+      return 'background-color: orange;'
+    }
+    if(props.state === sendState.recieved) {
+      return 'background-color: green;'
+    }
+    if(props.state === sendState.error) {
+      return 'background-color: red;'
+    }
+  }};
+`
+
+const SendStatus = (props: iSendingState) => {
+  switch (props.state) {
+    case 'sending':
+      return (<StatusMessage>Sending</StatusMessage>)
+      break;
+    case 'recieved':
+      return (<StatusMessage>Recieved</StatusMessage>)
+      break;
+    case 'error':
+      return (<StatusMessage>Error</StatusMessage>)
+      break;
+  
+    default:
+      return (<span></span>)
+      break;
+  }
+}
 
 const Index = ({ FUNCTIONS_BASE_URL }) => {
 	const { user, error, isLoading } = useUser()
@@ -102,7 +102,9 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
 	const [send, setSend] = useState<boolean | null>()
 	const [renderedTweets, setRenderedTweets] = useState([])
 	const [postedTweets, setPostedTweets] = useState<any[]>([])
+	const [sendingTweet, setSendingTweet] = useState<sendState>(sendState.null)
 	const [tweet, setTweet] = useState(DEFAULT_TWEET)
+  let sending : sendState = sendState.null
 
   useEffect(() => {
     generateTweets()
@@ -120,19 +122,25 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
 
 		const tokens = getUserToken()
 
-		sendTweetRequest(FUNCTIONS_BASE_URL, tokens, tweet)
+    sending = sendState.sending
+		sendTweetRequest(FUNCTIONS_BASE_URL, tokens, renderedTweets)
 			.then((tweetsArr) => {
 				setSend(true)
 				setPostedTweets(tweetsArr)
+        setSendingTweet(sendState.recieved)
+        setTimeout(() => {
+          setSendingTweet(sendState.null)
+        }, 3000)
 			})
 			.catch((error) => {
 				console.error('Didnt send!')
 				setSend(false)
+        setSendingTweet(sendState.error)
 			})
 	}
 
 	function generateTweets() {
-		const tweets = textToTweets(tweet)
+		const tweets = textToTweets(tweet, true)
     setRenderedTweets(tweets)
 		console.log('tweets: ', tweets)
 	}
@@ -196,7 +204,7 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
               </div>
 							<footer className="footer">
                 <button id='generate' onClick={sendTweet}>
-                  Send Thread
+                  Send Thread <SendStatus state={sendingTweet}></SendStatus>
                 </button>
               </footer>
 							
@@ -210,9 +218,6 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
 								| <span id='date'></span>
 							</footer>
 					</div>
-
-					<p>{send === true && <strong>Posted tweets!</strong>}</p>
-					<p>{send === false && <em>Didn;t send</em>}</p>
 			</div>
 		)
 	}
