@@ -1,6 +1,9 @@
 import { TWITTER, THREAD } from '../functions-lib/twitter-client'
 import { headers } from '../functions-lib/cors'
 
+// Fix for netlify
+require('encoding')
+
 exports.handler = async function (event, context) {
     if (event.httpMethod === 'OPTIONS') {
         return { statusCode: 200, headers, body: 'Ok' }
