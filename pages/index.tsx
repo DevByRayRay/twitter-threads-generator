@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { sendTweetRequest, setUserToken, getUserToken, textToTweets } from '../lib/twitter.service'
+import HomePage from '../components/homepage.layout'
 
 const PageHeader = styled.header`
 	display: grid;
@@ -221,7 +222,7 @@ const Index = ({ FUNCTIONS_BASE_URL }) => {
 		)
 	}
 
-	return <a href='/api/auth/login'>Login</a>
+	return <HomePage></HomePage>
 }
 
 export async function getStaticProps() {
