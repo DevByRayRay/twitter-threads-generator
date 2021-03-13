@@ -1,6 +1,11 @@
 :root {
 	--header-height: calc(48px + 2rem);
-	--main-color: #ff2d55;
+	--main-color: #00E271;
+	--sec-color: #0076FF;
+
+	--white: #fff;
+	--grey: #ccc;
+	--greyLight: #f1f1f1;
 }
 
 html,
@@ -24,7 +29,7 @@ body * {
 }
 
 body {
-	background: var(--main-color);
+	background: var(--sec-color);
 	color: #333;
 	padding: 0.5rem;
 }
@@ -65,12 +70,7 @@ button {
 h1 {
 	font-size: 2rem;
 }
-.column {
-	
-}
-.column--input {
-	padding-left: 1rem;
-}
+
 .column--output {
 	padding: 0 2rem;
 	overflow: auto;

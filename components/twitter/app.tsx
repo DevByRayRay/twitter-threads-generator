@@ -1,68 +1,12 @@
 import { getUserToken, sendTweetRequest, textToTweets, setUserToken } from 'lib/twitter.service'
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import Head from 'next/head'
-import Layout from '../components/layout'
-import { Header, HeaderCol, LinkButton, LoginWrapper, Logo, Title, UserCol } from '../components/homepage.layout'
-import PageHeader from '../components/page-header'
-import { Avatar } from '../components/page-header'
-
-export const AppContainer = styled.div`
-	display: grid;
-	width: 100%;
-	grid-template-columns: 1fr 1fr;
-	overflow: hidden;
-	padding-top: 1rem;
-`
-
-export const AppColumn = styled.div`
-	display: grid;
-	grid-template-rows: 1fr 47px;
-	grid-template-columns: 1fr;
-`
-
-export enum sendState {
-	sending = 'sending',
-	recieved = 'recieved',
-	error = 'error',
-}
-export interface iSendingState {
-	state: sendState
-}
-
-const StatusMessage = styled.div<iSendingState>`
-	display: inline-block;
-	color: #fff;
-	${(props) => {
-		if (props.state === sendState.sending) {
-			return 'background-color: orange;'
-		}
-		if (props.state === sendState.recieved) {
-			return 'background-color: green;'
-		}
-		if (props.state === sendState.error) {
-			return 'background-color: red;'
-		}
-	}};
-`
-
-const SendStatus = (props: iSendingState) => {
-	switch (props.state) {
-		case 'sending':
-			return <StatusMessage>Sending</StatusMessage>
-			break
-		case 'recieved':
-			return <StatusMessage>Recieved</StatusMessage>
-			break
-		case 'error':
-			return <StatusMessage>Error</StatusMessage>
-			break
-
-		default:
-			return <span></span>
-			break
-	}
-}
+import Layout from '../layout'
+import PageHeader, { Avatar } from '../page-header'
+import { Button, Footer, Textarea } from 'styles/styled'
+import { AppContainer, AppColumn, SendStatus } from './styles'
+import { sendState } from './types'
+import { Content } from 'components/homepage.layout'
 
 const DEFAULT_TWEET = `Surround yourself with the right people
 Jim Rohn famously said that you are the average of the five people you spend the most time with. There is an inherent truth to that, as we, as social creatures, pick up on the habits, behaviors, and attitudes of those around us. 
@@ -73,6 +17,7 @@ Wherever possible, you must remove toxic relationships from your life, regardles
 `
 
 const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
+	console.log('TwitterApp')
 	const [send, setSend] = useState<boolean | null>()
 	const [renderedTweets, setRenderedTweets] = useState([])
 	const [postedTweets, setPostedTweets] = useState<any[]>([])
@@ -82,21 +27,20 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 
 	useEffect(() => {
 		generateTweets()
-	}, [])
+	}, [tweet])
 
 	// Event for updating the tweet state
 	const onChangeTweet = (event) => {
 		console.log('ev: ', event.target.value)
 		setTweet(event.target.value)
+		generateTweets()
 	}
 
 	// Event for sending tweets
 	function sendTweet() {
-		console.log('tweet: ', tweet)
-
 		const tokens = getUserToken()
-
 		sending = sendState.sending
+
 		sendTweetRequest(FUNCTIONS_BASE_URL, tokens, renderedTweets)
 			.then((tweetsArr: any[]) => {
 				setSend(true)
@@ -107,7 +51,7 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 				}, 3000)
 			})
 			.catch((error) => {
-				console.error('Didnt send!')
+				console.error('Didnt send: ', error)
 				setSend(false)
 				setSendingTweet(sendState.error)
 			})
@@ -116,19 +60,9 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	function generateTweets() {
 		const tweets = textToTweets(tweet, true)
 		setRenderedTweets(tweets)
-		console.log('tweets: ', tweets)
 	}
 
-	const { sub, name, nickname, picture, updated_at } = user
-
-	if (localStorage) {
-		setUserToken(FUNCTIONS_BASE_URL, sub)
-			.then((data) => {
-				console.log('user: ', data)
-				localStorage.setItem('twitterThreadsToken', JSON.stringify(data))
-			})
-			.catch((err) => console.log('error getUser: ', err))
-	}
+	const { sub, picture } = user
 
 	return (
 		<Layout>
@@ -138,16 +72,23 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 				<meta name='viewport' content='initial-scale=1.0, width=device-width' />
 			</Head>
 
-			<PageHeader user={user}></PageHeader>
+			<PageHeader padding={true} user={user}></PageHeader>
 
 			<AppContainer>
 				<AppColumn className='column--input'>
-					{/* <textarea name="inputText" id="inputText" cols="" rows="" className="input"></textarea> */}
-					<textarea onChange={onChangeTweet} value={tweet} className='text input'></textarea>
+					<Content>
+						<h3>Write your story here 👇</h3>
+					</Content>
+					<Textarea
+						onChange={onChangeTweet}
+						onKeyDown={onChangeTweet}
+						value={tweet}
+						className='text input'
+					></Textarea>
 					<footer className='footer'>
-						<button id='generate' onClick={generateTweets}>
-							Generate Thread
-						</button>
+						<Button color={'action'} id='generate' onClick={sendTweet}>
+							Send Thread <SendStatus state={sendingTweet}></SendStatus>
+						</Button>
 					</footer>
 				</AppColumn>
 				<AppColumn className='column--output'>
@@ -162,20 +103,8 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 								)
 							})}
 					</div>
-					<footer className='footer'>
-						<button id='generate' onClick={sendTweet}>
-							Send Thread <SendStatus state={sendingTweet}></SendStatus>
-						</button>
-					</footer>
 				</AppColumn>
-
-				<footer className='footer'>
-					Build by{' '}
-					<a href='https://byrayray.dev' target='_blank' title='DevByRayRay'>
-						DevByRayRay
-					</a>{' '}
-					| <span id='date'></span>
-				</footer>
+				<Footer />
 			</AppContainer>
 		</Layout>
 	)

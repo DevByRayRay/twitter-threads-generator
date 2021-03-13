@@ -1,11 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import { LinkButton } from 'styles/styled'
 
-export const Header = styled.header`
-	padding: 0 1rem;
+interface IHeader {
+	padding: boolean
+}
+
+export const Header = styled.header<IHeader>`
 	display: grid;
 	grid-template-columns: 1fr 400px 1fr;
 	height: 80px;
+	width: 100%;
+	margin: 0 auto;
+
+	${(props: IHeader) => props.padding && `max-width: 960px;`}
 `
 
 export const Logo = styled.img`
@@ -27,19 +35,7 @@ export const LoginWrapper = styled.div`
 	justify-content: flex-end;
 	align-items: center;
 `
-export const LinkButton = styled.a`
-	background: var(--main-color);
-	padding: 0.8rem 1rem;
-	display: inline-block;
-	color: #fff;
-	border-radius: 5px;
-	height: 50px;
-	text-decoration: none;
-	transition: 0.5s ease-in-out;
-	&:hover {
-		background: #ff2676;
-	}
-`
+
 export const Title = styled.h1`
 	display: none;
 `
@@ -50,25 +46,34 @@ export const Avatar = styled.img`
 	overflow: hidden;
 `
 
-const PageHeader = ({ user = null }) => {
-	const { sub, name, nickname, picture, updated_at } = user
+const UserInfo = ({ user }) => {
+    console.log('user UserInfo: ', user)
 
 	return (
-		<Header>
+		<>
+			<Avatar src={user.picture} loading='lazy' />
+			<span>Welcome {user.name.substr(0, 13)}</span>
+		</>
+	)
+}
+
+const PageHeader = ({ user = null, padding = false }) => {
+    console.log('user pageHeader: ', user)
+	return (
+		<Header padding={padding}>
 			<UserCol>
-				{user && (
-					<>
-						<Avatar src={picture} loading='lazy' />
-						<span>Welcome {name.substr(0, 13)}</span>
-					</>
-				)}
+				{user ? <UserInfo user={user} /> : ''}
 			</UserCol>
 			<HeaderCol>
 				<Logo src={'/images/logo-social-uniqorn.png'} />
 				<Title>Social Uniqorn</Title>
 			</HeaderCol>
 			<LoginWrapper>
-				<LinkButton href='/api/auth/login'>Login</LinkButton>
+				{user ? (
+					<LinkButton color={'default'} href='/api/auth/logout'>Logout</LinkButton>
+				) : (
+					<LinkButton color={'action'} href='/api/auth/login'>Login</LinkButton>
+				)}
 			</LoginWrapper>
 		</Header>
 	)
