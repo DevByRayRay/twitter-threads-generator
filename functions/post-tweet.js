@@ -66,24 +66,3 @@ exports.handler = async function (event, context) {
     }
 
 }
-
-async function tweetThread(client, thread) {
-    let lastTweetID = [];
-    const tweets = thread.map(async (status, index) => {
-        let tweetConf = {
-            status,
-        }
-
-        if (index !== 0) {
-            tweetConf.auto_populate_reply_metadata = true
-            tweetConf.in_reply_to_status_id = lastTweetID[index - 1]
-        }
-
-        console.log('status: ', tweetConf)
-        const tweet = await client.post("statuses/update", tweetConf);
-        lastTweetID.push(tweet.id_str);
-    })
-
-    return Promise.all(tweets)
-}
-
