@@ -38,9 +38,13 @@ const HomePage = () => {
 				<PageHeader></PageHeader>
 				<Row>
 					<Content>
-
-					<h2>Express Yourself In <br /> Twitter Threads</h2>
-					<p>Turn your content into Twitter Threads automaticlly! <br /> Simply, copy-past and send the Twitter Thread via us.</p>
+						<h2>
+							Express yourself with <br /> Twitter Threads
+						</h2>
+						<p>
+							Turn your content into Twitter Threads automatically! <br />
+							Simply, copy-past and send the Twitter Thread via us.
+						</p>
 					</Content>
 				</Row>
 				<Row>
@@ -49,7 +53,6 @@ const HomePage = () => {
 					</Figure>
 				</Row>
 			</Container>
-			<Footer />
 		</Layout>
 	)
 }

@@ -61,18 +61,20 @@ const PageHeader = ({ user = null, padding = false }) => {
     console.log('user pageHeader: ', user)
 	return (
 		<Header padding={padding}>
-			<UserCol>
-				{user ? <UserInfo user={user} /> : ''}
-			</UserCol>
+			<UserCol>{user ? <UserInfo user={user} /> : ''}</UserCol>
 			<HeaderCol>
 				<Logo src={'/images/logo-social-uniqorn.png'} />
 				<Title>Social Uniqorn</Title>
 			</HeaderCol>
 			<LoginWrapper>
 				{user ? (
-					<LinkButton color={'default'} href='/api/auth/logout'>Logout</LinkButton>
+					<LinkButton color={'default'} href='/api/auth/logout'>
+						Logout
+					</LinkButton>
 				) : (
-					<LinkButton color={'action'} href='/api/auth/login'>Login</LinkButton>
+					<LinkButton color={'action'} href='/api/auth/login'>
+						Login with Twitter
+					</LinkButton>
 				)}
 			</LoginWrapper>
 		</Header>

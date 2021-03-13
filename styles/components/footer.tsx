@@ -2,7 +2,8 @@ import styled from 'styled-components'
 export const PageFooter = styled.footer`
 	text-align: center;
 	grid-column: 1/3;
-	padding: 0.3rem;
+	padding: 1rem 1rem 2rem;
+	margin-top: 2rem;
 
 	a {
 		color: var(--main-color);

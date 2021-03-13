@@ -66,12 +66,6 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 
 	return (
 		<Layout>
-			<Head>
-				<title>Social Uniqorn</title>
-				<meta property='og:title' content='Social Uniqorn' key='title' />
-				<meta name='viewport' content='initial-scale=1.0, width=device-width' />
-			</Head>
-
 			<PageHeader padding={true} user={user}></PageHeader>
 
 			<AppContainer>
@@ -104,7 +98,6 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 							})}
 					</div>
 				</AppColumn>
-				<Footer />
 			</AppContainer>
 		</Layout>
 	)
