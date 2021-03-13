@@ -38,4 +38,3 @@ yarn-error.log*
 /out_functions/
 
 .env
-.netlify

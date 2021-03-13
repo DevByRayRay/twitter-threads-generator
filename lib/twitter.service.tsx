@@ -44,11 +44,13 @@ async function setUserToken(BASE_URL, userId) {
 				accessTokenSecret: '',
 			}
 
-			if (Array.isArray(identities) && identities.length > 0) {
+			if (identities && Array.isArray(identities) && identities.length > 0) {
 				identities.forEach((identity) => {
 					token.accessToken = identity.access_token ? identity.access_token : ''
 					token.accessTokenSecret = identity.access_token_secret ? identity.access_token_secret : ''
 				})
+			} else {
+				reject('identities were not found')
 			}
 
 			resolve(token)

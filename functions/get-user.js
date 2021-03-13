@@ -2,6 +2,7 @@ import { AUTH0 } from '../functions-lib/auth0-client'
 import { headers } from '../functions-lib/cors'
 
 exports.handler = async function (event, context) {
+
     if (event.httpMethod === 'OPTIONS') {
         return { statusCode: 200, headers, body: 'Ok' }
     }
