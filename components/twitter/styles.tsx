@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { mediaQueries } from 'styles/components/breakpoints'
 import { iSendingState, sendState } from './types'
 
 export const StatusMessage = styled.div<iSendingState>`
@@ -47,6 +48,9 @@ export const AppColumn = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 2rem;
+	padding: 0 2rem;
+
+	${() => mediaQueries('lg')(`padding: 0;`)}
 
 	&.column--input {
 		textarea {

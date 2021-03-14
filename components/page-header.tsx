@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { mediaQueries } from 'styles/components/breakpoints'
 import { LinkButton } from 'styles/styled'
 
 interface IHeader {
@@ -8,14 +9,28 @@ interface IHeader {
 }
 
 export const Header = styled.header<IHeader>`
-	display: grid;
-	grid-template-columns: 1fr 400px 1fr;
-	height: 80px;
 	width: 100%;
 	margin: 0 auto;
 
 	${(props: IHeader) => props.padding && `max-width: 960px;`}
 	${(props: IHeader) => props.margin && `margin-bottom: 3rem;`}
+
+	${() =>
+		mediaQueries('xs')(`
+		height: 80px; 
+		display: grid; 
+		grid-template-columns: 400px 1fr;
+		grid-template-row: auto auto;
+		padding: 0 2rem;
+	`)}
+	${() =>
+		mediaQueries('lg')(`
+		height: 80px; 
+		display: grid; 
+		grid-template-columns: 1fr 400px 1fr;
+		grid-template-row: auto auto;
+		padding: 0;
+	`)}
 `
 
 export const Logo = styled.img`
@@ -23,14 +38,23 @@ export const Logo = styled.img`
 	height: 60px;
 `
 export const UserCol = styled.div`
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	display: none;
+	
+	${() =>
+		mediaQueries('lg')(`
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	`)}
 `
-export const HeaderCol = styled.div`
+export const LogoCol = styled.div`
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	
+	${() =>
+		mediaQueries('lg')(`
+		justify-content: center;
+	`)}
 `
 export const LoginWrapper = styled.div`
 	display: flex;
@@ -50,7 +74,7 @@ export const Avatar = styled.img`
 `
 
 const UserInfo = ({ user }) => {
-    console.log('user UserInfo: ', user)
+	console.log('user UserInfo: ', user)
 
 	return (
 		<>
@@ -65,14 +89,14 @@ const PageHeader = ({ user = null, padding = false, margin = false }) => {
 	return (
 		<Header padding={padding} margin={margin}>
 			<UserCol>{user ? <UserInfo user={user} /> : ''}</UserCol>
-			<HeaderCol>
+			<LogoCol>
 				<Logo
 					src={
 						'https://res.cloudinary.com/raymons/image/upload/c_scale,f_auto,h_60,q_70/v1615668889/socialuniqorn/logo-social-uniqorn.png'
 					}
 				/>
 				<Title>Social Uniqorn</Title>
-			</HeaderCol>
+			</LogoCol>
 			<LoginWrapper>
 				{user && (
 					<LinkButton color={'default'} href='/api/auth/logout'>

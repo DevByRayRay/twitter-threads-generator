@@ -4,6 +4,7 @@ import PageHeader from './page-header'
 import { Footer, LinkButton } from 'styles/styled'
 import React from 'react'
 import { Figure } from 'styles/components/media'
+import { device, mediaQueries } from 'styles/components/breakpoints'
 
 export const Container = styled.div`
 	margin: 0 auto;
@@ -12,16 +13,20 @@ export const Container = styled.div`
 	flex-direction: column;
 `
 export const Row = styled.div`
-	/* text-align: center; */
+	padding: 0 2rem;
 	&.content {
-		padding-top: 7rem;
+		display: flex;
+		align-items: center;
 	}
 `
 export const Columns = styled.div`
 	padding-top: 2rem;
 	display: grid;
-	grid-template-columns: 2fr 3fr;
-	gap: 4rem;
+	/* grid-template-columns: 2fr 3fr; */
+	gap: 2rem;
+
+	/* ${() => mediaQueries('sm')(`grid-template-columns: 1fr;`)} */
+	${() => mediaQueries('sm')(`grid-template-columns: 2fr 3fr;`)}
 `
 
 export const Content = styled.div`
