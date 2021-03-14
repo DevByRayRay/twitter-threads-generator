@@ -4,7 +4,7 @@ import PageHeader from './page-header'
 import { Footer, LinkButton } from 'styles/styled'
 import React from 'react'
 import { Figure } from 'styles/components/media'
-import { device, mediaQueries } from 'styles/components/breakpoints'
+import { mediaQueries } from 'styles/components/breakpoints'
 
 export const Container = styled.div`
 	margin: 0 auto;
