@@ -4,6 +4,7 @@ import { LinkButton } from 'styles/styled'
 
 interface IHeader {
 	padding: boolean
+	margin: boolean
 }
 
 export const Header = styled.header<IHeader>`
@@ -14,6 +15,7 @@ export const Header = styled.header<IHeader>`
 	margin: 0 auto;
 
 	${(props: IHeader) => props.padding && `max-width: 960px;`}
+	${(props: IHeader) => props.margin && `margin-bottom: 3rem;`}
 `
 
 export const Logo = styled.img`
@@ -44,6 +46,7 @@ export const Avatar = styled.img`
 	height: 48px;
 	border-radius: 50%;
 	overflow: hidden;
+	z-index: 1;
 `
 
 const UserInfo = ({ user }) => {
@@ -57,23 +60,19 @@ const UserInfo = ({ user }) => {
 	)
 }
 
-const PageHeader = ({ user = null, padding = false }) => {
-    console.log('user pageHeader: ', user)
+const PageHeader = ({ user = null, padding = false, margin = false }) => {
+	console.log('user pageHeader: ', user)
 	return (
-		<Header padding={padding}>
+		<Header padding={padding} margin={margin}>
 			<UserCol>{user ? <UserInfo user={user} /> : ''}</UserCol>
 			<HeaderCol>
 				<Logo src={'/images/logo-social-uniqorn.png'} />
 				<Title>Social Uniqorn</Title>
 			</HeaderCol>
 			<LoginWrapper>
-				{user ? (
+				{user && (
 					<LinkButton color={'default'} href='/api/auth/logout'>
 						Logout
-					</LinkButton>
-				) : (
-					<LinkButton color={'action'} href='/api/auth/login'>
-						Login with Twitter
 					</LinkButton>
 				)}
 			</LoginWrapper>

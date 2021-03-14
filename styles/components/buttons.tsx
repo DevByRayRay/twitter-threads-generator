@@ -13,7 +13,7 @@ export const Button = styled.button<IButton>`
 	transition: 0.5s ease-in-out;
 
 	${(props) => (!props.color || props.color === 'default' ? `color:var(--white);background: var(--grey);` : '')}
-	${(props) => (props.color === 'action' ? `color:var(--white);background: var(--sec-color);` : '')}
+	${(props) => (props.color === 'action' ? `color:var(--white);background: var(--main-color);` : '')}
 
 	&:hover {
 		background: var(--greyLight);

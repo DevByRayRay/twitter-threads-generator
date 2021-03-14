@@ -3,7 +3,7 @@ export const PageFooter = styled.footer`
 	text-align: center;
 	grid-column: 1/3;
 	padding: 1rem 1rem 2rem;
-	margin-top: 2rem;
+	margin-top: 3rem;
 
 	a {
 		color: var(--main-color);

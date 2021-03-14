@@ -109,7 +109,7 @@ h1 {
 	padding-bottom: 2rem;
 	line-height: 1.6em;
 	position: relative;
-	border-bottom: 1px solid #1e2b3a;
+	border-bottom: 1px solid var(--sec-color);
 }
 .tweet__content button {
 	position: absolute;
@@ -127,21 +127,14 @@ h1 {
 .tweet__content:before {
 	content: '';
 	display: block;
-	background: #ccc;
-	width: 2px;
+	background: var(--sec-color);
+	width: 1px;
 	height: 100%;
 	position: absolute;
 	top: 46px;
 	left: -41px;
-	z-index: -1;
 }
 
 .tweet:last-child .tweet__content:before {
 	height: 0;
-}
-
-.tweet__footer {
-	width: 100%;
-	height: 2rem;
-	color: rgb(12, 162, 12);
 }
