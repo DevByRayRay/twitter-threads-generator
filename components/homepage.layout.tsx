@@ -59,8 +59,7 @@ const HomePage = () => {
 								<LinkButton color={'action'} href='/api/auth/login'>
 									Login with Twitter
 								</LinkButton>
-								
-								
+
 								<br />
 								<em>Try it out, It's free 🚀</em>
 							</p>
@@ -68,7 +67,12 @@ const HomePage = () => {
 					</Row>
 					<Row>
 						<Figure>
-							<img src={'/images/social-uniqorn-screenshot.png'} loading='lazy' />
+							<img
+								src={
+									'https://res.cloudinary.com/raymons/image/upload/c_scale,f_auto,q_100,w_700/v1615747541/socialuniqorn/social-uniqorn-screenshot-2.png'
+								}
+								loading='lazy'
+							/>
 						</Figure>
 					</Row>
 				</Columns>

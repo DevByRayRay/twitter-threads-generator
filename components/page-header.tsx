@@ -66,7 +66,11 @@ const PageHeader = ({ user = null, padding = false, margin = false }) => {
 		<Header padding={padding} margin={margin}>
 			<UserCol>{user ? <UserInfo user={user} /> : ''}</UserCol>
 			<HeaderCol>
-				<Logo src={'/images/logo-social-uniqorn.png'} />
+				<Logo
+					src={
+						'https://res.cloudinary.com/raymons/image/upload/c_scale,f_auto,h_60,q_70/v1615668889/socialuniqorn/logo-social-uniqorn.png'
+					}
+				/>
 				<Title>Social Uniqorn</Title>
 			</HeaderCol>
 			<LoginWrapper>
