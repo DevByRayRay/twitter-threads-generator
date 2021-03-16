@@ -26,8 +26,9 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	let sending: sendState | null = null
 
 	useEffect(() => {
+		console.log('user: ', user)
 		generateTweets()
-	}, [tweet])
+	}, [tweet, user])
 
 	// Event for updating the tweet state
 	const onChangeTweet = (event) => {
@@ -38,6 +39,7 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 
 	// Event for sending tweets
 	function sendTweet() {
+		setSendingTweet(sendState.sending)
 		const tokens = getUserToken()
 		sending = sendState.sending
 

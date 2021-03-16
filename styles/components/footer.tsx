@@ -17,11 +17,15 @@ export const Footer = () => {
 
 	return (
 		<PageFooter>
-			Build by{' '}
-			<a href='https://byrayray.dev' target='_blank' title='DevByRayRay'>
-				DevByRayRay
-			</a>{' '}
-			| <span id='date'>{today}</span>
+			<p>
+				
+				Build by{' '}
+					<a href='https://byrayray.dev' target='_blank' title='DevByRayRay'>
+						DevByRayRay
+					</a>{' '}
+					| <span id='date'>{today}</span>
+			
+			</p>
 		</PageFooter>
 	)
 }
