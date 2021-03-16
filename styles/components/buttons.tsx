@@ -33,6 +33,7 @@ export const LinkButton = styled.a<IButton>`
 	height: 50px;
 	text-decoration: none;
 	transition: 0.5s ease-in-out;
+	cursor: pointer;
 
 	${(props) => (!props.color || props.color === 'default' ? `color:var(--white);background: var(--grey);` : '')}
 	${(props) => (props.color === 'action' ? `color:var(--white);background: var(--sec-color);` : '')}
@@ -40,5 +41,17 @@ export const LinkButton = styled.a<IButton>`
 	&:hover {
 		background: var(--greyLight);
 		color: #000;
+	}
+`
+export const LinkText = styled.a`
+	padding: 0.3rem 0.5rem;
+	display: inline-block;
+	color: var(--main-color);
+	text-decoration: underline;
+	transition: 0.5s ease-in-out;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: none;
 	}
 `

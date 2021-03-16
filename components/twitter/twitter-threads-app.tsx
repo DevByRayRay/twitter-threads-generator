@@ -2,11 +2,12 @@ import { getUserToken, sendTweetRequest, textToTweets, setUserToken } from 'lib/
 import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Layout from '../layout'
-import PageHeader, { Avatar } from '../page-header'
+import PageHeader from '../page-header'
 import { Button, Footer, Textarea } from 'styles/styled'
 import { AppContainer, AppColumn, SendStatus } from './styles'
 import { sendState } from './types'
 import { Content } from 'components/homepage.layout'
+import { Avatar } from '../user/styles'
 
 const DEFAULT_TWEET = `Surround yourself with the right people
 Jim Rohn famously said that you are the average of the five people you spend the most time with. There is an inherent truth to that, as we, as social creatures, pick up on the habits, behaviors, and attitudes of those around us. 

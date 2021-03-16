@@ -4,6 +4,10 @@ import { Footer } from 'styles/styled'
 const LayoutEl = styled.div`
 	background: #fff;
 	min-height: calc(100vh - 1rem);
+	height: 100%;
+	box-sizing: border-box;
+	padding-bottom: 82px;
+	position: relative;
 `
 
 const Layout = (props) => {
@@ -21,10 +25,8 @@ const Layout = (props) => {
 				<meta name='msapplication-TileColor' content='#ffffff'></meta>
 				<meta name='theme-color' content='#ffffff'></meta>
 			</Head>
-			<LayoutEl>
 				{props.children}
 				<Footer />
-			</LayoutEl>
 		</LayoutEl>
 	)
 }

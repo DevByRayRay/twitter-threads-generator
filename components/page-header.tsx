@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { mediaQueries } from 'styles/components/breakpoints'
 import { LinkButton } from 'styles/styled'
+import { UserInfo } from './user/styles'
+import Link from 'next/link'
+import { LinkText } from 'styles/components/buttons'
 
 interface IHeader {
 	padding: boolean
@@ -11,25 +14,20 @@ interface IHeader {
 export const Header = styled.header<IHeader>`
 	width: 100%;
 	margin: 0 auto;
+	padding-top: 1rem;
 
-	${(props: IHeader) => props.padding && `max-width: 960px;`}
+	${(props: IHeader) => props.padding && `padding-left: 2rem; padding-right: 2rem;`}
 	${(props: IHeader) => props.margin && `margin-bottom: 3rem;`}
 
 	${() =>
 		mediaQueries('xs')(`
-		height: 80px; 
 		display: grid; 
 		grid-template-columns: 400px 1fr;
-		grid-template-row: auto auto;
-		padding: 0 2rem;
 	`)}
 	${() =>
 		mediaQueries('lg')(`
-		height: 80px; 
 		display: grid; 
 		grid-template-columns: 1fr 400px 1fr;
-		grid-template-row: auto auto;
-		padding: 0;
 	`)}
 `
 
@@ -39,7 +37,7 @@ export const Logo = styled.img`
 `
 export const UserCol = styled.div`
 	display: none;
-	
+
 	${() =>
 		mediaQueries('lg')(`
 		display: flex;
@@ -50,7 +48,7 @@ export const UserCol = styled.div`
 export const LogoCol = styled.div`
 	display: flex;
 	align-items: center;
-	
+
 	${() =>
 		mediaQueries('lg')(`
 		justify-content: center;
@@ -60,35 +58,47 @@ export const LoginWrapper = styled.div`
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+
+	a {
+		margin-left: 1rem;
+	}
+`
+export const NavWrapper = styled.div`
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+	}
+
+	li {
+		margin: 0.5rem;
+	}
+
+	a {
+	}
 `
 
 export const Title = styled.h1`
 	display: none;
 `
-export const Avatar = styled.img`
-	width: 48px;
-	height: 48px;
-	border-radius: 50%;
-	overflow: hidden;
-	z-index: 1;
-`
-
-const UserInfo = ({ user }) => {
-	console.log('user UserInfo: ', user)
-
-	return (
-		<>
-			<Avatar src={user.picture} loading='lazy' />
-			<span>Welcome {user.name.substr(0, 13)}</span>
-		</>
-	)
-}
 
 const PageHeader = ({ user = null, padding = false, margin = false }) => {
 	console.log('user pageHeader: ', user)
 	return (
 		<Header padding={padding} margin={margin}>
-			<UserCol>{user ? <UserInfo user={user} /> : ''}</UserCol>
+			<NavWrapper>
+					<ul>
+						<li>
+							<Link href='/'>
+								<LinkText>Home</LinkText>
+							</Link>
+						</li>
+						<li></li>
+					</ul>
+				</NavWrapper>
 			<LogoCol>
 				<Logo
 					src={
@@ -99,9 +109,14 @@ const PageHeader = ({ user = null, padding = false, margin = false }) => {
 			</LogoCol>
 			<LoginWrapper>
 				{user && (
-					<LinkButton color={'default'} href='/api/auth/logout'>
-						Logout
-					</LinkButton>
+					<>
+						<Link href='/profile'>
+							<LinkText>Profile</LinkText>
+						</Link>
+						<LinkButton color={'default'} href='/api/auth/logout'>
+							Logout
+						</LinkButton>
+					</>
 				)}
 			</LoginWrapper>
 		</Header>
