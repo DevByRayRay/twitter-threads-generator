@@ -14,7 +14,6 @@ function sendTweetRequest(BASE_URL, tokens, tweets) {
 				})
 
 				const json = await data.json()
-				console.log('tweetttt: ', json)
 				resolve(json)
 			} catch (error) {
 				console.error('error: ', error)
@@ -35,7 +34,7 @@ async function setUserToken(BASE_URL, userId) {
 		try {
 			const data = await fetch(`${BASE_URL}/get-user?id=${userId}`)
 			const json = await data.json()
-			console.log('json: ', json)
+
 			const {
 				data: { identities },
 			} = json

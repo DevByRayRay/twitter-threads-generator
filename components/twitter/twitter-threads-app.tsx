@@ -34,7 +34,6 @@ const UserWarningContent = styled.div`
 `
 
 const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
-	console.log('TwitterApp')
 	const [send, setSend] = useState<boolean | null>()
 	const [renderedTweets, setRenderedTweets] = useState([])
 	const [postedTweets, setPostedTweets] = useState<any[]>([])
