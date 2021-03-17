@@ -5,8 +5,6 @@ import TwitterApp from '../components/twitter/twitter-threads-app'
 const Index = ({ FUNCTIONS_BASE_URL }) => {
 	const { user, error, isLoading } = useUser()
 
-	console.log('user: ', user)
-
 	if (isLoading) return <div>Loading...</div>
 	if (error) return <div>{error.message}</div>
 	if (user) {

@@ -3,19 +3,28 @@ import Layout from 'components/layout'
 import UserProfile from '../components/user/user-profile'
 import PageHeader from '../components/page-header'
 
-const UserProfilePage = () => {
+const UserProfilePage = ({ FUNCTIONS_BASE_URL }) => {
 	const { user, error, isLoading } = useUser()
 
 	if (isLoading) return <div>Loading...</div>
 	if (error) return <div>{error.message}</div>
 	if (user) {
-		console.log('user: ', user)
 		return (
 			<Layout>
 				<PageHeader padding={true} user={user}></PageHeader>
-				<UserProfile user={user} />
+				<UserProfile FUNCTIONS_BASE_URL={FUNCTIONS_BASE_URL} user={user} />
 			</Layout>
 		)
+	}
+}
+
+export async function getStaticProps() {
+	const { FUNCTIONS_BASE_URL } = process.env
+
+	return {
+		props: {
+			FUNCTIONS_BASE_URL,
+		},
 	}
 }
 

@@ -86,19 +86,18 @@ export const Title = styled.h1`
 `
 
 const PageHeader = ({ user = null, padding = false, margin = false }) => {
-	console.log('user pageHeader: ', user)
 	return (
 		<Header padding={padding} margin={margin}>
 			<NavWrapper>
-					<ul>
-						<li>
-							<Link href='/'>
-								<LinkText>Home</LinkText>
-							</Link>
-						</li>
-						<li></li>
-					</ul>
-				</NavWrapper>
+				<ul>
+					<li>
+						<Link href='/'>
+							<LinkText>Home</LinkText>
+						</Link>
+					</li>
+					<li></li>
+				</ul>
+			</NavWrapper>
 			<LogoCol>
 				<Logo
 					src={
@@ -113,7 +112,7 @@ const PageHeader = ({ user = null, padding = false, margin = false }) => {
 						<Link href='/profile'>
 							<LinkText>Profile</LinkText>
 						</Link>
-						<LinkButton color={'default'} href='/api/auth/logout'>
+						<LinkButton size={'small'} color={'default'} href='/api/auth/logout'>
 							Logout
 						</LinkButton>
 					</>

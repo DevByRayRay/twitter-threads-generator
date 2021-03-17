@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Layout from '../layout'
 import PageHeader from '../page-header'
-import { Button, Footer, Textarea } from 'styles/styled'
+import { Button, Footer, Textarea, LinkButton } from 'styles/styled'
 import { AppContainer, AppColumn, SendStatus } from './styles'
 import { sendState } from './types'
 import { Content } from 'components/homepage.layout'
 import { Avatar } from '../user/styles'
+import { getUserProfile } from 'lib/user.service'
+import { UserProfileModel, UserType } from 'components/user/types'
+import styled from 'styled-components'
 
 const DEFAULT_TWEET = `Surround yourself with the right people
 Jim Rohn famously said that you are the average of the five people you spend the most time with. There is an inherent truth to that, as we, as social creatures, pick up on the habits, behaviors, and attitudes of those around us. 
@@ -15,6 +18,19 @@ Jim Rohn famously said that you are the average of the five people you spend the
 What that means is that if you want the strength and positivity to get through anything, you must keep your circle of friends and associates as healthy as you can.
 
 Wherever possible, you must remove toxic relationships from your life, regardless of how tough it may be. And in situations such as work where you many not have control, you must learn how to practice positivity so its spreads to those around you. #socialuniqorn
+`
+
+const UserWarning = styled.div`
+	background: var(--redDark);
+	padding: 1rem;
+	color: var(--white);
+	margin-top: 1rem;
+	display: flex;
+	justify-content: center;
+`
+const UserWarningContent = styled.div`
+	max-width: 768px;
+	text-align: center;
 `
 
 const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
@@ -26,14 +42,21 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	const [tweet, setTweet] = useState(DEFAULT_TWEET)
 	let sending: sendState | null = null
 
+	const [userProfile, setUserProfile] = useState(user)
+
+	async function userInfo(userId) {
+		const profile = await getUserProfile(FUNCTIONS_BASE_URL, userId)
+		const userModel = new UserProfileModel({ ...user, ...profile })
+		setUserProfile(userModel)
+	}
+
 	useEffect(() => {
-		console.log('user: ', user)
+		userInfo(user.sub)
 		generateTweets()
 	}, [tweet, user])
 
 	// Event for updating the tweet state
 	const onChangeTweet = (event) => {
-		console.log('ev: ', event.target.value)
 		setTweet(event.target.value)
 		generateTweets()
 	}
@@ -69,7 +92,27 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 
 	return (
 		<Layout>
-			<PageHeader padding={true} user={user}></PageHeader>
+			<PageHeader padding={true} user={userProfile}></PageHeader>
+			{userProfile.type === UserType.email && (
+				<UserWarning>
+					<UserWarningContent>
+						<p>
+							<em>
+								We can't send your Threads to Twitter. <br />
+								Copy and paste the tweets below and send them via{' '}
+								<a href='https://twitter.com' target='_blank'>
+									Twitter
+								</a>
+								, or just{' '}
+								<LinkButton size={'small'} color={'action'} href='/api/auth/login'>
+									Login with Twitter
+								</LinkButton>
+								.
+							</em>
+						</p>
+					</UserWarningContent>
+				</UserWarning>
+			)}
 
 			<AppContainer>
 				<AppColumn className='column--input'>
@@ -83,9 +126,11 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 						className='text input'
 					></Textarea>
 					<footer className='footer'>
-						<Button color={'action'} id='generate' onClick={sendTweet}>
-							Send Thread <SendStatus state={sendingTweet}></SendStatus>
-						</Button>
+						{userProfile.type === UserType.social && (
+							<Button color={'action'} id='generate' onClick={sendTweet}>
+								Send Thread <SendStatus state={sendingTweet}></SendStatus>
+							</Button>
+						)}
 					</footer>
 				</AppColumn>
 				<AppColumn className='column--output'>

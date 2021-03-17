@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import Head from 'next/head'
 import { Footer } from 'styles/styled'
+import { GlobalStyle } from '../styles/styled'
+
 const LayoutEl = styled.div`
 	background: #fff;
 	min-height: calc(100vh - 1rem);
@@ -13,6 +15,7 @@ const LayoutEl = styled.div`
 const Layout = (props) => {
 	return (
 		<LayoutEl>
+			<GlobalStyle />
 			<Head>
 				<title>Social Uniqorn</title>
 				<meta property='og:title' content='Social Uniqorn' key='title' />
@@ -25,8 +28,8 @@ const Layout = (props) => {
 				<meta name='msapplication-TileColor' content='#ffffff'></meta>
 				<meta name='theme-color' content='#ffffff'></meta>
 			</Head>
-				{props.children}
-				<Footer />
+			{props.children}
+			<Footer />
 		</LayoutEl>
 	)
 }

@@ -1,19 +1,45 @@
 import styled from 'styled-components'
 
+enum eButtonSize {
+	normal = 'normal',
+	small = 'small',
+	big = 'big',
+}
 interface IButton {
 	color: 'default' | 'action'
+	size: eButtonSize
+}
+
+function buttonSize (size: eButtonSize) : string {
+	let btnSize = ''
+
+	switch (size) {
+		case eButtonSize.small:
+			btnSize = 'padding: 0.3rem 0.5rem;'
+			break;
+	
+		case eButtonSize.big:
+			btnSize = 'padding: 1rem 1.2rem;'
+			break;
+	
+		default:
+			btnSize = 'padding: 0.8rem 1rem;'
+			break;
+	}
+
+	return btnSize
 }
 
 export const Button = styled.button<IButton>`
-	padding: 0.8rem 1rem;
 	display: inline-block;
 	border-radius: 5px;
-	height: 50px;
 	text-decoration: none;
 	transition: 0.5s ease-in-out;
 
 	${(props) => (!props.color || props.color === 'default' ? `color:var(--white);background: var(--grey);` : '')}
 	${(props) => (props.color === 'action' ? `color:var(--white);background: var(--main-color);` : '')}
+	
+	${(props) => (buttonSize(props?.size))}
 
 	&:hover {
 		background: var(--greyLight);
@@ -26,14 +52,15 @@ export const Button = styled.button<IButton>`
 `
 export const LinkButton = styled.a<IButton>`
 	background: var(--grey);
-	padding: 0.8rem 1rem;
 	display: inline-block;
 	color: #fff;
 	border-radius: 5px;
-	height: 50px;
 	text-decoration: none;
 	transition: 0.5s ease-in-out;
 	cursor: pointer;
+
+	${(props) => (buttonSize(props?.size))}
+
 
 	${(props) => (!props.color || props.color === 'default' ? `color:var(--white);background: var(--grey);` : '')}
 	${(props) => (props.color === 'action' ? `color:var(--white);background: var(--sec-color);` : '')}
@@ -54,4 +81,10 @@ export const LinkText = styled.a`
 	&:hover {
 		text-decoration: none;
 	}
+`
+
+export const ButtonWrapper = styled.div`
+	padding-top: 2rem;
+	display: flex;
+	justify-content: space-between;
 `
