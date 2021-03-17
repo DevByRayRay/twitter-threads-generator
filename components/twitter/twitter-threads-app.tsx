@@ -1,9 +1,8 @@
 import { getUserToken, sendTweetRequest, textToTweets, setUserToken } from 'lib/twitter.service'
 import React, { useState, useEffect } from 'react'
-import Head from 'next/head'
 import Layout from '../layout'
 import PageHeader from '../page-header'
-import { Button, Footer, Textarea, LinkButton } from 'styles/styled'
+import { Button, Textarea, LinkButton, Container } from 'styles/styled'
 import { AppContainer, AppColumn, SendStatus } from './styles'
 import { sendState } from './types'
 import { Content } from 'components/homepage.layout'
@@ -91,61 +90,63 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 
 	return (
 		<Layout>
-			<PageHeader padding={true} user={userProfile}></PageHeader>
-			{userProfile.type === UserType.email && (
-				<UserWarning>
-					<UserWarningContent>
-						<p>
-							<em>
-								We can't send your Threads to Twitter. <br />
-								Copy and paste the tweets below and send them via{' '}
-								<a href='https://twitter.com' target='_blank'>
-									Twitter
-								</a>
-								, or just{' '}
-								<LinkButton size={'small'} color={'action'} href='/api/auth/login'>
-									Login with Twitter
-								</LinkButton>
-								.
-							</em>
-						</p>
-					</UserWarningContent>
-				</UserWarning>
-			)}
+			<Container>
+				<PageHeader padding={true} user={userProfile}></PageHeader>
+				{userProfile.type === UserType.email && (
+					<UserWarning>
+						<UserWarningContent>
+							<p>
+								<em>
+									We can't send your Threads to Twitter. <br />
+									Copy and paste the tweets below and send them via{' '}
+									<a href='https://twitter.com' target='_blank'>
+										Twitter
+									</a>
+									, or just{' '}
+									<LinkButton size={'small'} color={'action'} href='/api/auth/login'>
+										Login with Twitter
+									</LinkButton>
+									.
+								</em>
+							</p>
+						</UserWarningContent>
+					</UserWarning>
+				)}
 
-			<AppContainer>
-				<AppColumn className='column--input'>
-					<Content>
-						<h3>Write your story here 👇</h3>
-					</Content>
-					<Textarea
-						onChange={onChangeTweet}
-						onKeyDown={onChangeTweet}
-						value={tweet}
-						className='text input'
-					></Textarea>
-					<footer className='footer'>
-						{userProfile.type === UserType.social && (
-							<Button color={'action'} id='generate' onClick={sendTweet}>
-								Send Thread <SendStatus state={sendingTweet}></SendStatus>
-							</Button>
-						)}
-					</footer>
-				</AppColumn>
-				<AppColumn className='column--output'>
-					<div id='output'>
-						{renderedTweets &&
-							renderedTweets.map((item, index) => {
-								return (
-									<div key={index} className='tweet'>
-										<Avatar src={picture} loading='lazy' />
-										<div className='tweet__content'>{item}</div>
-									</div>
-								)
-							})}
-					</div>
-				</AppColumn>
-			</AppContainer>
+				<AppContainer>
+					<AppColumn className='column--input'>
+						<Content>
+							<h3>Write your story here 👇</h3>
+						</Content>
+						<Textarea
+							onChange={onChangeTweet}
+							onKeyDown={onChangeTweet}
+							value={tweet}
+							className='text input'
+						></Textarea>
+						<footer className='footer'>
+							{userProfile.type === UserType.social && (
+								<Button color={'action'} id='generate' onClick={sendTweet}>
+									Send Thread <SendStatus state={sendingTweet}></SendStatus>
+								</Button>
+							)}
+						</footer>
+					</AppColumn>
+					<AppColumn className='column--output'>
+						<div id='output'>
+							{renderedTweets &&
+								renderedTweets.map((item, index) => {
+									return (
+										<div key={index} className='tweet'>
+											<Avatar src={picture} loading='lazy' />
+											<div className='tweet__content'>{item}</div>
+										</div>
+									)
+								})}
+						</div>
+					</AppColumn>
+				</AppContainer>
+			</Container>
 		</Layout>
 	)
 }

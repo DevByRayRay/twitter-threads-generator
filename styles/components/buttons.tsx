@@ -35,18 +35,18 @@ export const Button = styled.button<IButton>`
 	border-radius: 5px;
 	text-decoration: none;
 	transition: 0.5s ease-in-out;
+	width: auto;
 
 	${(props) => (!props.color || props.color === 'default' ? `color:var(--white);background: var(--grey);` : '')}
 	${(props) => (props.color === 'action' ? `color:var(--white);background: var(--main-color);` : '')}
 	
-	${(props) => (buttonSize(props?.size))}
+	${(props) => buttonSize(props?.size)}
 
 	&:hover {
 		background: var(--greyLight);
 		color: #000;
 
-		${(props) =>
-			!props.color || props.color === 'default' ? `background: var(--greyLight); color:var(--black);` : ''}
+		${(props) => (!props.color || props.color === 'default' ? `background: var(--greyLight); color:var(--black);` : '')}
 		${(props) => (props.color === 'action' ? `background: var(--grey); color:var(--black);` : '')}
 	}
 `
