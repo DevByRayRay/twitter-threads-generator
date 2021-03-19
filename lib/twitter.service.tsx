@@ -14,7 +14,6 @@ function sendTweetRequest(BASE_URL, tokens, tweets) {
 				})
 
 				const json = await data.json()
-				console.log('tweetttt: ', json)
 				resolve(json)
 			} catch (error) {
 				console.error('error: ', error)
@@ -30,16 +29,21 @@ function sendTweetRequest(BASE_URL, tokens, tweets) {
 	})
 }
 
+export interface TToken {
+	accessToken: string
+	accessTokenSecret: string
+}
+
 async function setUserToken(BASE_URL, userId) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const data = await fetch(`${BASE_URL}/get-user?id=${userId}`)
 			const json = await data.json()
-			console.log('json: ', json)
+
 			const {
 				data: { identities },
 			} = json
-			let token = {
+			let token: TToken = {
 				accessToken: '',
 				accessTokenSecret: '',
 			}
@@ -53,6 +57,10 @@ async function setUserToken(BASE_URL, userId) {
 				reject('identities were not found')
 			}
 
+			if (localStorage) {
+				localStorage.setItem('twitterThreadsToken', JSON.stringify(token))
+			}
+
 			resolve(token)
 		} catch (error) {
 			reject(error)
@@ -60,9 +68,14 @@ async function setUserToken(BASE_URL, userId) {
 	})
 }
 
-function getUserToken() {
+function getUserToken(): TToken {
 	const data = localStorage.getItem('twitterThreadsToken')
 	return data ? JSON.parse(data) : {}
+}
+function clearUserToken() {
+	if (localStorage) {
+		localStorage.removeItem('twitterThreadsToken')
+	}
 }
 
 function textToTweets(inputTxt: string, prefix: boolean): string[] {
@@ -83,4 +96,4 @@ function textToTweets(inputTxt: string, prefix: boolean): string[] {
 	return addNumbers
 }
 
-export { sendTweetRequest, setUserToken, getUserToken, textToTweets }
+export { sendTweetRequest, setUserToken, getUserToken, textToTweets, clearUserToken }

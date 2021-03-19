@@ -8,3 +8,27 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+
+# Deploy Preview context:
+# All deploys generated from a pull/merge request
+# will inherit these settings.
+[context.deploy-preview.environment]
+  TWITTER_CLIENT='l1OWDB2zETYhpiaTf7W3aMluf'
+  TWITTER_SECRET='3qhAhMHIeUfqKJqPcB4ocBDYf08VYlzPhQEg830ki5i8q7xszh'
+  TWITTER_BEARER='AAAAAAAAAAAAAAAAAAAAALnFNQEAAAAAZm9pmvsNmU9sg621IfY9WpPvTnc%3DQJpBCLN9ZiOLYkXOn1eUfUuCfFaWFBVM2WyH0dHzpQyUtoQBKS'
+  TWITTER_ACCESS='4924248694-UGWIwuX1pqaMBCqQZraBBFsJ20JcdnYd7Q9ShBD'
+  TWITTER_ACCESS_SECRET='1KnaYEsPs8rIU3HU0XAG0VXu8aFg0L8NMKthpYMfvouU8'
+
+  AUTH0_DOMAIN='twitter-thread.eu.auth0.com'
+  AUTH0_CLIENT='fHBCpzfEQ1xMbcdwJOtdV2JPURqFjhES'
+  AUTH0_SECRET='uqXdNI5ZIJUqtQkYOEL0SW7OUvy9pYlC1Jn4BnjfbseWd20aAaGgqz9p07z2lIP6'
+
+  AUTH0_SECRET_NEXT='ZGV2YnlyYXlyYXlkZXZieXJheXJheWRldmJ5cmF5cmF5ZGV2YnlyYXlyYXk'
+  AUTH0_BASE_URL='https://feature-user-profile.socialuniqorn.com'
+  AUTH0_ISSUER_BASE_URL='https://twitter-thread.eu.auth0.com'
+  AUTH0_CLIENT_ID='iN3LboAaIbKCUsxumtrUq6jMCOxRhwlU'
+  AUTH0_CLIENT_SECRET='jDF7L4RVz18Uj-ooLrCRGO_folPC1NFBdeW2R9PmA5HWljEBuTXFZ7kmWbENtqkt'
+
+  FUNCTIONS_BASE_URL="https://socialuniqorn.com/.netlify/functions"
+

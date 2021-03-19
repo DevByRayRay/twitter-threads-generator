@@ -1,17 +1,13 @@
 import styled from 'styled-components'
 import Layout from './layout'
 import PageHeader from './page-header'
-import { Footer, LinkButton } from 'styles/styled'
+import { Container, Footer, LinkButton } from 'styles/styled'
 import React from 'react'
 import { Figure } from 'styles/components/media'
 import { mediaQueries } from 'styles/components/breakpoints'
+import { clearUserToken } from 'lib/twitter.service'
 
-export const Container = styled.div`
-	margin: 0 auto;
-	max-width: 1200px;
-	display: flex;
-	flex-direction: column;
-`
+
 export const Row = styled.div`
 	padding: 0 2rem;
 	&.content {
@@ -44,12 +40,17 @@ export const Content = styled.div`
 	}
 `
 
-const HomePage = () => {
+const HomePage = ({ user = null }) => {
 	console.log('HomePage')
+
+	if (!user) {
+		clearUserToken()
+	}
+	
 	return (
 		<Layout>
 			<Container>
-				<PageHeader margin={true}></PageHeader>
+				<PageHeader user={user} margin={true} padding={true}></PageHeader>
 				<Columns>
 					<Row className='content'>
 						<Content>

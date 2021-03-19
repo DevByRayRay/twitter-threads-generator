@@ -1,14 +1,15 @@
 import { useUser } from '@auth0/nextjs-auth0'
-import HomePage from '../components/homepage.layout'
-import TwitterApp from '../components/twitter/twitter-threads-app'
+import HomePage from '../../components/homepage.layout'
+import TwitterApp from '../../components/twitter/twitter-threads-app'
 
-const Index = ({ FUNCTIONS_BASE_URL }) => {
+const TwitterThreads = ({ FUNCTIONS_BASE_URL }) => {
 	const { user, error, isLoading } = useUser()
 
 	if (isLoading) return <div>Loading...</div>
 	if (error) return <div>{error.message}</div>
-
-	return <HomePage user={user || null}></HomePage>
+	if (user) {
+		return <TwitterApp user={user} FUNCTIONS_BASE_URL={FUNCTIONS_BASE_URL}></TwitterApp>
+	}
 }
 
 export async function getStaticProps() {
@@ -21,4 +22,4 @@ export async function getStaticProps() {
 	}
 }
 
-export default Index
+export default TwitterThreads
