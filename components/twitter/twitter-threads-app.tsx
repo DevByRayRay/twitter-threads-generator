@@ -20,10 +20,7 @@ Wherever possible, you must remove toxic relationships from your life, regardles
 `
 
 const UserWarning = styled.div`
-	background: var(--redDark);
-	padding: 1rem;
-	color: var(--white);
-	margin-top: 1rem;
+	color: var(--redDark);
 	display: flex;
 	justify-content: center;
 `
@@ -92,27 +89,6 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 		<Layout>
 			<Container>
 				<PageHeader padding={true} user={userProfile}></PageHeader>
-				{userProfile.type === UserType.email && (
-					<UserWarning>
-						<UserWarningContent>
-							<p>
-								<em>
-									We can't send your Threads to Twitter. <br />
-									Copy and paste the tweets below and send them via{' '}
-									<a href='https://twitter.com' target='_blank'>
-										Twitter
-									</a>
-									, or just{' '}
-									<LinkButton size={'small'} color={'action'} href='/api/auth/login'>
-										Login with Twitter
-									</LinkButton>
-									.
-								</em>
-							</p>
-						</UserWarningContent>
-					</UserWarning>
-				)}
-
 				<AppContainer>
 					<AppColumn className='column--input'>
 						<Content>
@@ -124,6 +100,21 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 							value={tweet}
 							className='text input'
 						></Textarea>
+						{userProfile.type === UserType.email && (
+							<UserWarning>
+								<UserWarningContent>
+									<p>
+										<em></em>
+									</p>
+									<p>
+										If you want us to send your Twitter Thread <br />
+										<LinkButton size={'small'} color={'action'} href='/api/auth/login'>
+											Sign up with Twitter
+										</LinkButton>
+									</p>
+								</UserWarningContent>
+							</UserWarning>
+						)}
 						<footer className='footer'>
 							{userProfile.type === UserType.social && (
 								<Button color={'action'} id='generate' onClick={sendTweet}>
