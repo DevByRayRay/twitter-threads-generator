@@ -1,4 +1,4 @@
-import { getUserToken, sendTweetRequest, textToTweets, setUserToken } from 'lib/twitter.service'
+import { getUserToken, sendTweetRequest, textToTweets, setUserToken, TToken } from 'lib/twitter.service'
 import React, { useState, useEffect } from 'react'
 import Layout from '../layout'
 import PageHeader from '../page-header'
@@ -42,6 +42,7 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	async function userInfo(userId) {
 		const profile = await getUserProfile(FUNCTIONS_BASE_URL, userId)
 		const userModel = new UserProfileModel({ ...user, ...profile })
+		await setUserToken(FUNCTIONS_BASE_URL, user.sub)
 		setUserProfile(userModel)
 	}
 
@@ -59,8 +60,13 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	// Event for sending tweets
 	function sendTweet() {
 		setSendingTweet(sendState.sending)
-		const tokens = getUserToken()
+		const tokens : TToken = getUserToken()
 		sending = sendState.sending
+
+		if(tokens.accessToken.length === 0 || tokens.accessTokenSecret.length === 0) {
+			setSend(false)
+			return
+		}
 
 		sendTweetRequest(FUNCTIONS_BASE_URL, tokens, renderedTweets)
 			.then((tweetsArr: any[]) => {

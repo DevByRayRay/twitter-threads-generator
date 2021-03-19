@@ -73,7 +73,7 @@ export const LinkButton = styled.a<IButton>`
 export const LinkText = styled.a`
 	padding: 0.3rem 0.5rem;
 	display: inline-block;
-	color: var(--main-color);
+	color: var(--sec-color);
 	text-decoration: underline;
 	transition: 0.5s ease-in-out;
 	cursor: pointer;

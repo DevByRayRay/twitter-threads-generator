@@ -5,7 +5,7 @@ import { IconHamburger, LinkButton } from 'styles/styled'
 import { UserInfo } from './user/styles'
 import Link from 'next/link'
 import { Button, LinkText } from 'styles/components/buttons'
-import {useState} from 'react';
+import { useState } from 'react'
 
 interface IHeader {
 	padding: boolean
@@ -67,8 +67,6 @@ export const LogoCol = styled.div`
 		}
 	`)}
 
-	
-
 	${() =>
 		mediaQueries('lg')(`
 		justify-content: center;
@@ -104,7 +102,6 @@ export const MobileNav = styled.div<IMobileNav>`
 	width: 100%;
 	background: var(--white);
 	box-shadow: 10px 20px 40px 0 rgba(1, 23, 54, 0.2);
-
 
 	${() =>
 		mediaQueries('lg')(`
@@ -193,11 +190,16 @@ const PageHeader = ({ user = null, padding = false, margin = false }) => {
 				)}
 			</NavWrapper>
 			<LogoCol>
-				<Logo
-					src={
-						'https://res.cloudinary.com/raymons/image/upload/c_scale,f_auto,h_60,q_70/v1615668889/socialuniqorn/logo-social-uniqorn.png'
-					}
-				/>
+				<Link href='/'>
+					<a>
+
+					<Logo
+						src={
+							'https://res.cloudinary.com/raymons/image/upload/c_scale,f_auto,h_60,q_70/v1615668889/socialuniqorn/logo-social-uniqorn.png'
+						}
+					/>
+					</a>
+				</Link>
 				<Title>Social Uniqorn</Title>
 				<Button size={'small'} onClick={toggleNavFn}>
 					<IconHamburger />

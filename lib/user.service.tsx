@@ -12,5 +12,4 @@ async function getUserProfile(BASE_URL, userId): Promise<UserProfileModel> {
 		}
 	})
 }
-
 export { getUserProfile }
