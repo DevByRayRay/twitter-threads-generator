@@ -58,8 +58,8 @@ const HomePage = ({ user = null }) => {
 								Express yourself with <br /> Twitter Threads
 							</h2>
 							<p>
-								Turn your content into Twitter Threads automatically! Simply, copy-past and send the
-								Twitter Thread via us.
+								Turn your content into Twitter Threads automatically! Simply copy-paste and send the
+								Twitter Thread.
 							</p>
 							<p>
 								<LinkButton color={'action'} href='/api/auth/login'>
