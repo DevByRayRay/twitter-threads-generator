@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { mediaQueries } from 'styles/components/breakpoints'
 import { IconHamburger, LinkButton } from 'styles/styled'
-import { UserInfo } from './user/styles'
 import Link from 'next/link'
 import { Button, LinkText } from 'styles/components/buttons'
 import { useState } from 'react'
@@ -192,18 +191,19 @@ const PageHeader = ({ user = null, padding = false, margin = false }) => {
 			<LogoCol>
 				<Link href='/'>
 					<a>
-
-					<Logo
-						src={
-							'https://res.cloudinary.com/raymons/image/upload/c_scale,f_auto,h_60,q_70/v1615668889/socialuniqorn/logo-social-uniqorn.png'
-						}
-					/>
+						<Logo
+							src={
+								'https://res.cloudinary.com/raymons/image/upload/c_scale,f_auto,h_60,q_70/v1615668889/socialuniqorn/logo-social-uniqorn.png'
+							}
+						/>
 					</a>
 				</Link>
 				<Title>Social Uniqorn</Title>
-				<Button size={'small'} onClick={toggleNavFn}>
-					<IconHamburger />
-				</Button>
+				{user && (
+					<Button size={'small'} onClick={toggleNavFn}>
+						<IconHamburger />
+					</Button>
+				)}
 			</LogoCol>
 			<MobileNav show={toggleNav}>
 				{user && (

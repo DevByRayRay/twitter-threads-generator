@@ -1,6 +1,5 @@
 import { useUser } from '@auth0/nextjs-auth0'
-import HomePage from '../components/homepage.layout'
-import TwitterApp from '../components/twitter/twitter-threads-app'
+import HomePage from '../components/pages/home'
 
 const Index = ({ FUNCTIONS_BASE_URL }) => {
 	const { user, error, isLoading } = useUser()
