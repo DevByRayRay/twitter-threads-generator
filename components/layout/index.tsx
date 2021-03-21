@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Head from 'next/head'
 import { Footer } from 'styles/styled'
-import { GlobalStyle } from '../styles/styled'
+import { GlobalStyle } from '../../styles/styled'
 
 const LayoutEl = styled.div`
 	background: #fff;

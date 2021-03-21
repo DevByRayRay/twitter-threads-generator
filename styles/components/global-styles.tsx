@@ -44,5 +44,7 @@ export const GlobalStyle = createGlobalStyle`
 		--red: ${root.red};
 		--redDark: ${root.redDark};
 		--inputDisabled: ${root.inputDisabled};
+
+		--max-width: 1100px;
 	}
 `

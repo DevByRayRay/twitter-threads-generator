@@ -1,7 +1,7 @@
 import { useUser } from '@auth0/nextjs-auth0'
 import Layout from 'components/layout'
 import UserProfile from '../components/user/user-profile'
-import PageHeader from '../components/page-header'
+import PageHeader from '../components/layout/header'
 import { Container } from 'styles/styled'
 
 const UserProfilePage = ({ FUNCTIONS_BASE_URL }) => {

@@ -1,15 +1,14 @@
 import { getUserToken, sendTweetRequest, textToTweets, setUserToken, TToken } from 'lib/twitter.service'
 import React, { useState, useEffect } from 'react'
 import Layout from '../layout'
-import PageHeader from '../page-header'
+import PageHeader from '../layout/header'
 import { Button, Textarea, LinkButton, Container } from 'styles/styled'
-import { AppContainer, AppColumn, SendStatus } from './styles'
+import { AppContainer, AppColumn, SendStatus, UserWarningContent, UserWarning } from './styles'
 import { sendState } from './types'
-import { Content } from 'components/homepage.layout'
 import { Avatar } from '../user/styles'
 import { getUserProfile } from 'lib/user.service'
 import { UserProfileModel, UserType } from 'components/user/types'
-import styled from 'styled-components'
+import { Content } from '@components/pages/home/styles'
 
 const DEFAULT_TWEET = `Surround yourself with the right people
 Jim Rohn famously said that you are the average of the five people you spend the most time with. There is an inherent truth to that, as we, as social creatures, pick up on the habits, behaviors, and attitudes of those around us. 
@@ -17,16 +16,6 @@ Jim Rohn famously said that you are the average of the five people you spend the
 What that means is that if you want the strength and positivity to get through anything, you must keep your circle of friends and associates as healthy as you can.
 
 Wherever possible, you must remove toxic relationships from your life, regardless of how tough it may be. And in situations such as work where you many not have control, you must learn how to practice positivity so its spreads to those around you. #socialuniqorn
-`
-
-const UserWarning = styled.div`
-	color: var(--redDark);
-	display: flex;
-	justify-content: center;
-`
-const UserWarningContent = styled.div`
-	max-width: 768px;
-	text-align: center;
 `
 
 const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {

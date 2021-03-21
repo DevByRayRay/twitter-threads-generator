@@ -38,7 +38,7 @@ export const SendStatus = (props: iSendingState) => {
 
 export const AppContainer = styled.div`
 	display: flex;
-	max-width: 960px;
+	max-width: var(--max-width);
 	flex-direction: column;
 	padding-top: 1rem;
 	margin: 0 auto;
@@ -58,4 +58,13 @@ export const AppColumn = styled.div`
 			margin-bottom: 1rem;
 		}
 	}
+`
+export const UserWarning = styled.div`
+	color: var(--redDark);
+	display: flex;
+	justify-content: center;
+`
+export const UserWarningContent = styled.div`
+	max-width: 768px;
+	text-align: center;
 `
