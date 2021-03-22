@@ -31,6 +31,7 @@ const Layout = (props) => {
 			</Head>
 			{props.children}
 			<Footer />
+			<script src='//code.tidio.co/x3xzikw37k2efopeyhcrw2tfspb9sff0.js' async></script>
 		</LayoutEl>
 	)
 }
