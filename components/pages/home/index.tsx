@@ -25,7 +25,7 @@ const HomePage = ({ user = null }) => {
 	return (
 		<Layout>
 			<Container>
-				<PageHeader user={user} margin={true} padding={true}></PageHeader>
+				<PageHeader margin={true} padding={true}></PageHeader>
 				<Columns>
 					<Row className='content'>
 						<Content>
