@@ -1,6 +1,6 @@
 import { useUser } from '@auth0/nextjs-auth0'
 import HomePage from '../../components/pages/home'
-import TwitterApp from '../../components/twitter/twitter-threads-app'
+import TwitterContainer from '../../components/twitter/twitter-container'
 
 const TwitterThreads = ({ FUNCTIONS_BASE_URL }) => {
 	const { user, error, isLoading } = useUser()
@@ -8,7 +8,7 @@ const TwitterThreads = ({ FUNCTIONS_BASE_URL }) => {
 	if (isLoading) return <div>Loading...</div>
 	if (error) return <div>{error.message}</div>
 	if (user) {
-		return <TwitterApp user={user} FUNCTIONS_BASE_URL={FUNCTIONS_BASE_URL}></TwitterApp>
+		return <TwitterContainer user={user} FUNCTIONS_BASE_URL={FUNCTIONS_BASE_URL}></TwitterContainer>
 	}
 }
 

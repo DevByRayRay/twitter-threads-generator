@@ -5,6 +5,7 @@ import React from 'react'
 import { Figure } from 'styles/components/media'
 import { clearUserToken } from 'lib/twitter.service'
 import { Columns, Content, Row } from './styles'
+import { useEffect } from 'react'
 
 const content = {
 	title: `Save time while turning your content into Twitter Threads`,
@@ -15,9 +16,11 @@ const content = {
 const HomePage = ({ user = null }) => {
 	console.log('HomePage')
 
-	if (!user) {
-		clearUserToken()
-	}
+	useEffect(() => {
+		if (!user) {
+			clearUserToken()
+		}
+	}, [])
 
 	return (
 		<Layout>

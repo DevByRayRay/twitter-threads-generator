@@ -5,4 +5,5 @@ export const Container = styled.div`
 	max-width: var(--max-width);
 	display: flex;
 	flex-direction: column;
+	position: relative;
 `

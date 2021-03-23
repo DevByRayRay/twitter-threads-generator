@@ -29,4 +29,5 @@ export const Avatar = styled.img`
 	border-radius: 50%;
 	overflow: hidden;
 	z-index: 1;
+	background-color: #ccc;
 `

@@ -5,6 +5,7 @@ import { IconHamburger, LinkButton } from 'styles/styled'
 import Link from 'next/link'
 import { Button, LinkText } from 'styles/components/buttons'
 import { useState } from 'react'
+import { useUser } from '@auth0/nextjs-auth0'
 
 interface IHeader {
 	padding: boolean
@@ -163,7 +164,8 @@ export const Title = styled.h1`
 	display: none;
 `
 
-const PageHeader = ({ user = null, padding = false, margin = false }) => {
+const PageHeader = ({ padding = false, margin = false }) => {
+	const { user, error, isLoading } = useUser()
 	const [toggleNav, setToggleNav] = useState<boolean>(false)
 
 	const toggleNavFn = () => {
