@@ -1,16 +1,43 @@
 import styled from 'styled-components'
 import { mediaQueries } from '@styles/styled'
+import { complement, invert } from 'polished'
+import { root } from '@styles/components/global-styles'
 
 export interface RowProps {
 	fullWith?: boolean
 	columns?: number
+	marginTop?: string
+	marginBottom?: string
+	backgroundColor?: string
+	dynamicTxtColor?: boolean
+	gradient?: boolean
+	gradientFrom?: string
+	gradientTo?: string
+	color?: string
+}
+
+function getStyle(props, property, style) {
+	return props[property] ? `${style}: ${props[property]};` : ''
+}
+function getGradient(from, to) {
+	return `background: linear-gradient(0deg, ${from} 0%, ${to} 100%);`
 }
 
 export const Row = styled.div<RowProps>`
-	${() => mediaQueries('xs')(`padding: 0 2rem;`)}
+	${() => mediaQueries('xs')(`padding-left: 2rem; padding-right: 2rem;`)}
 	${() => mediaQueries('lg')(`padding: 0 0;`)}
 
-	${(props) => (props.fullWith ? `grid-column: 1/${props.columns + 1 ?? 3};` : '')}
+	${(props) => (props.fullWith && props.columns ? `grid-column: 1/${props.columns + 1 ?? 3};` : console.log('fullWith: ', props.fullWith))}
+
+	${(props) => getStyle(props, 'marginBottom', 'margin-bottom')}
+	${(props) => getStyle(props, 'marginTop', 'margin-top')}
+	${(props) => getStyle(props, 'backgroundColor', 'background-color')}
+	${(props) => getStyle(props, 'color', 'color')}
+
+	${(props) => (props.dynamicTxtColor ? `color: ${invert(props.gradientTo ?? props.backgroundColor)};` : '')}
+	${(props) => props.gradient && getGradient(props.gradientFrom, props.gradientTo)}
+
+	/* ${getGradient(root.mainColor, root.white)}; */
 
 	&.content {
 		display: flex;

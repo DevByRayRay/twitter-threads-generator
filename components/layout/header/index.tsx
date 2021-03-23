@@ -22,7 +22,7 @@ export const Header = styled.header<IHeader>`
 	position: relative;
 
 	${(props: IHeader) => props.padding && `padding-left: 1rem; padding-right: 1rem;`}
-	${(props: IHeader) => props.margin && `margin-bottom: 3rem;`}
+	${(props: IHeader) => props.margin && `margin-bottom: 1rem;`}
 
 	${() =>
 		mediaQueries('xs')(`
