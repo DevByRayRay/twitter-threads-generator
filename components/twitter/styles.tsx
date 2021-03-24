@@ -54,8 +54,7 @@ export const AppColumn = styled.div`
 
 	&.column--input {
 		textarea {
-			height: 400px;
-			margin-bottom: 1rem;
+			height: 500px;
 		}
 	}
 `

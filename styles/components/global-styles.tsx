@@ -1,7 +1,7 @@
 import { lighten, darken } from 'polished'
 import styled, { createGlobalStyle } from 'styled-components'
 
-const rootColors = () => {
+export const rootColors = () => {
 	const mainColor = '#00E271'
 	const secColor = '#0076FF'
 	const white = '#fff'
@@ -12,6 +12,9 @@ const rootColors = () => {
 	const greyLight = lighten(0.01, grey)
 	const greyLighter = lighten(0.1, grey)
 	const greyDarken = darken(0.01, grey)
+
+	const black = '#000'
+	const darkGrey = '#333'
 
 	return {
 		mainColor,
@@ -24,6 +27,8 @@ const rootColors = () => {
 		red,
 		redDark,
 		inputDisabled,
+		black,
+		darkGrey,
 	}
 }
 
@@ -40,6 +45,9 @@ export const GlobalStyle = createGlobalStyle`
 		--greyLight: ${root.greyLight};
 		--greyLighter: ${root.greyLighter};
 		--greyDarken: ${root.greyDarken};
+		
+		--black: ${root.black};
+		--darkGrey: ${root.darkGrey};
 
 		--red: ${root.red};
 		--redDark: ${root.redDark};

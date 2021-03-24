@@ -13,8 +13,8 @@ const UserProfilePage = ({ FUNCTIONS_BASE_URL }) => {
 		return (
 			<Layout>
 				<Container>
-						<PageHeader user={user} margin={true} padding={true}></PageHeader>
-						<UserProfile FUNCTIONS_BASE_URL={FUNCTIONS_BASE_URL} user={user} />
+					<PageHeader margin={true} padding={true}></PageHeader>
+					<UserProfile FUNCTIONS_BASE_URL={FUNCTIONS_BASE_URL} user={user} />
 				</Container>
 			</Layout>
 		)

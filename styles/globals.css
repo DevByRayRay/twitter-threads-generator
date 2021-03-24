@@ -36,8 +36,8 @@ button {
 	border: 0;
 }
 
-.container {
-	
+p {
+	margin: 0 0 1rem 0;	
 }
 
 .header,
@@ -71,6 +71,10 @@ h1 {
 	box-sizing: border-box;
 	white-space: break-spaces;
 	padding: 1rem 1.2rem;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
 }
 
 #output {
