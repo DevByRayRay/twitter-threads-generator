@@ -17,7 +17,7 @@ const Index = ({ FUNCTIONS_BASE_URL, content }) => {
 					<PageHeader margin={true} padding={true}></PageHeader>
 				</Container>
 			</Row>
-			<Row gradient={true} gradientFrom={lighten('0.1', root.mainColor)} gradientTo={root.white} dynamicTxtColor={true}>
+			<Row gradient={true} gradientFrom={root.white} gradientTo={root.greyLighter} dynamicTxtColor={true}>
 				<Container>
 					<Row marginTop='8rem' marginBottom='8rem'>
 						<Content contentWidth={'800px'} textAlign={'center'}>
@@ -37,7 +37,7 @@ const Index = ({ FUNCTIONS_BASE_URL, content }) => {
 					</Row>
 				</Container>
 			</Row>
-			<Row color={root.white} backgroundColor={root.secColor}>
+			<Row backgroundColor={root.secColor} color={root.white}>
 				<Container>
 					<Row marginTop='5rem' marginBottom='5rem'>
 						<Content textAlign={'center'}>
