@@ -45,8 +45,11 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 		if (user && user.sub) {
 			userInfo(user.sub)
 		}
+	}, [])
+
+	useEffect(() => {
 		generateTweets()
-	}, [tweet, user])
+	}, [tweet])
 
 	// Event for updating the tweet state
 	const onChangeTweet = (event) => {
