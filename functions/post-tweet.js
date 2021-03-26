@@ -20,18 +20,6 @@ exports.handler = async function (event, context) {
 
     try {
 
-        // const messages = [
-        //     {
-        //         text: `“The greatest discovery of all time is that a person can change his future by merely changing his attitude.”
-        //     – Oprah Winfrey`},
-        //     {
-        //         text: `“It’s a funny thing about life, once you begin to take note of the things you are grateful for, you begin to lose sight of the things that you lack.”
-        //     – Germany Kent`},
-        //     {
-        //         text: `“Happiness is a quality of the soul…not a function of one’s material circumstances.”
-        //     – Aristotle`}
-        // ];
-
         console.log("🚀 ~ file: post-tweet.js ~ line 16 ~ messages", messages)
         let tweets = Array.isArray(messages) ? messages : [messages]
         const mappedTweets = tweets.map((tweetItem) => {
@@ -40,9 +28,11 @@ exports.handler = async function (event, context) {
             }
         })
 
-        console.log("mappedTweets", mappedTweets)
-        console.log("mappedTweets", mappedTweets.length)
-        const sendTweetRequest = await thread.tweetThread(mappedTweets)
+        const maxTweets = mappedTweets.slice(0, 10)
+
+        console.log("mappedTweets", maxTweets)
+        console.log("mappedTweets", maxTweets.length)
+        const sendTweetRequest = await thread.tweetThread(maxTweets)
 
         console.log("sendTweetRequest", sendTweetRequest.length)
         console.log("sendTweetRequest", sendTweetRequest)
