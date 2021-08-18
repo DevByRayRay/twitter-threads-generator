@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Footer } from 'styles/styled'
 import { GlobalStyle } from '../../styles/styled'
 import { useEffect, useState } from 'react'
+import { GeneralContextProvider } from './user-context'
 
 const LayoutEl = styled.div`
 	background: #fff;
@@ -15,36 +16,38 @@ const LayoutEl = styled.div`
 
 const Layout = (props) => {
 	const [domain, setDomain] = useState('')
+	// process.env.FUNCTIONS_BASE_URL
 
 	useEffect(() => {
+		console.log('domain: ', location)
 		setDomain(location.hostname)
 	}, [domain])
 
-	const isRemote = () => domain === "socialuniqorn.com"
+	const isRemote = () => domain === 'socialuniqorn.com'
 
 	return (
-        <LayoutEl>
-			<GlobalStyle />
-			<Head>
-				<title>Social Uniqorn</title>
-				<meta property='og:title' content='Social Uniqorn' key='title' />
-				<meta name='viewport' content='initial-scale=1.0, width=device-width' />
-				<link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
-				<link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
-				<link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
-				<link rel='manifest' href='/site.webmanifest' />
-				<link rel='mask-icon' href='/safari-pinned-tab.svg' color='#5bbad5' />
-				<meta name='msapplication-TileColor' content='#ffffff'></meta>
-				<meta name='theme-color' content={'#ffffff'}></meta>
-				<script async defer data-domain='socialuniqorn.com' src='https://plausible.io/js/plausible.js'></script>
-			</Head>
-			{props.children}
-			<Footer />
-			{isRemote() && (
-			<script src='//code.tidio.co/x3xzikw37k2efopeyhcrw2tfspb9sff0.js' async></script>
-			)}
-		</LayoutEl>
-    );
+		<GeneralContextProvider>
+			<LayoutEl>
+				<GlobalStyle />
+				<Head>
+					<title>Social Uniqorn</title>
+					<meta property="og:title" content="Social Uniqorn" key="title" />
+					<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+					<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+					<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+					<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+					<link rel="manifest" href="/site.webmanifest" />
+					<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+					<meta name="msapplication-TileColor" content="#ffffff"></meta>
+					<meta name="theme-color" content={'#ffffff'}></meta>
+					<script async defer data-domain="socialuniqorn.com" src="https://plausible.io/js/plausible.js"></script>
+				</Head>
+				{props.children}
+				<Footer />
+				{isRemote() && <script src="//code.tidio.co/x3xzikw37k2efopeyhcrw2tfspb9sff0.js" async></script>}
+			</LayoutEl>
+		</GeneralContextProvider>
+	)
 }
 
 export default Layout

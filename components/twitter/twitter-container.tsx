@@ -5,15 +5,15 @@ import PageHeader from '../layout/header'
 import { Container } from 'styles/styled'
 import TwitterApp from './twitter'
 
-const TwitterContainer = ({ FUNCTIONS_BASE_URL, user }) => {
+const TwitterContainer = () => {
 	return (
-		<Layout>
-			<Container>
-				<PageHeader padding={true}></PageHeader>
-				<TwitterApp FUNCTIONS_BASE_URL={FUNCTIONS_BASE_URL} user={user}></TwitterApp>
-			</Container>
-		</Layout>
-	)
+    <Layout>
+      <Container>
+        <PageHeader padding={true}></PageHeader>
+        <TwitterApp></TwitterApp>
+      </Container>
+    </Layout>
+  )
 }
 
 export default TwitterContainer

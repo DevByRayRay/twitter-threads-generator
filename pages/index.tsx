@@ -1,15 +1,14 @@
-import { useUser } from '@auth0/nextjs-auth0'
 import Layout from '@components/layout'
 import PageHeader from '@components/layout/header'
-import { BackgroundImage, Columns, Content, FeatureItem, FeaturesList, Row } from '@components/pages/home/styles'
+import { Content, FeatureItem, FeaturesList, Row } from '@components/pages/home/styles'
 import TwitterApp from '@components/twitter/twitter'
 import { root } from '@styles/components/global-styles'
 import { Container } from '@styles/components/layout'
 import { LinkButton } from '@styles/styled'
-import { lighten } from 'polished'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 const Index = ({ FUNCTIONS_BASE_URL, content }) => {
+	
 	return (
 		<Layout>
 			<Row>

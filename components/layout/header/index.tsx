@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { mediaQueries } from 'styles/components/breakpoints'
 import { IconHamburger, LinkButton } from 'styles/styled'
@@ -6,6 +6,10 @@ import Link from 'next/link'
 import { Button, LinkText } from 'styles/components/buttons'
 import { useState } from 'react'
 import { useUser } from '@auth0/nextjs-auth0'
+import GeneralContext from '../user-context'
+import {  useEffect  } from 'react'
+import { UserProfileModel } from '@components/user/types'
+import { clearUserToken } from 'lib/twitter.service'
 
 interface IHeader {
 	padding: boolean
@@ -166,7 +170,14 @@ export const Title = styled.h1`
 
 const PageHeader = ({ padding = false, margin = false }) => {
 	const { user, error, isLoading } = useUser()
+	const {updateFun, fun} = useContext(GeneralContext)
 	const [toggleNav, setToggleNav] = useState<boolean>(false)
+
+	useEffect(() => {
+		if (!user) {
+			clearUserToken()
+		}
+	}, [])
 
 	const toggleNavFn = () => {
 		setToggleNav(!toggleNav)
@@ -178,12 +189,12 @@ const PageHeader = ({ padding = false, margin = false }) => {
 				{user && (
 					<ul>
 						<li>
-							<Link href='/'>
+							<Link href="/">
 								<LinkText>Home</LinkText>
 							</Link>
 						</li>
 						<li>
-							<Link href='/twitter/threads'>
+							<Link href="/twitter/threads">
 								<LinkText>Twitter Threads</LinkText>
 							</Link>
 						</li>
@@ -191,7 +202,7 @@ const PageHeader = ({ padding = false, margin = false }) => {
 				)}
 			</NavWrapper>
 			<LogoCol>
-				<Link href='/'>
+				<Link href="/">
 					<a>
 						<Logo
 							src={
@@ -211,22 +222,22 @@ const PageHeader = ({ padding = false, margin = false }) => {
 				{user && (
 					<ul>
 						<li>
-							<Link href='/'>
+							<Link href="/">
 								<LinkText>Home</LinkText>
 							</Link>
 						</li>
 						<li>
-							<Link href='/twitter/threads'>
+							<Link href="/twitter/threads">
 								<LinkText>Twitter Threads</LinkText>
 							</Link>
 						</li>
 						<li>
-							<Link href='/profile'>
+							<Link href="/profile">
 								<LinkText>Profile</LinkText>
 							</Link>
 						</li>
 						<li>
-							<LinkButton size={'small'} color={'default'} href='/api/auth/logout'>
+							<LinkButton size={'small'} color={'default'} href="/api/auth/logout">
 								Logout
 							</LinkButton>
 						</li>
@@ -236,10 +247,10 @@ const PageHeader = ({ padding = false, margin = false }) => {
 			<LoginWrapper>
 				{user && (
 					<>
-						<Link href='/profile'>
+						<Link href="/profile">
 							<LinkText>Profile</LinkText>
 						</Link>
-						<LinkButton size={'small'} color={'default'} href='/api/auth/logout'>
+						<LinkButton size={'small'} color={'default'} href="/api/auth/logout">
 							Logout
 						</LinkButton>
 					</>
