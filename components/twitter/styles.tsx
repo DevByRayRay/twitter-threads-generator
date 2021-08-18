@@ -67,3 +67,35 @@ export const UserWarningContent = styled.div`
 	max-width: 768px;
 	text-align: center;
 `
+
+export const TweetImageContainer = styled.div`
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 500px 500px;
+	gap: 1rem;
+
+	> canvas {
+		width: 500px;
+		height: 500px;
+		background-color: grey;
+	}
+`
+
+export const TweetImage = styled.div`
+	margin: 0 auto;
+	height: 500px;
+	max-width: 500px;
+	padding: 1rem 2rem;
+	background: blue;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	> div {
+		text-align: center;
+		font-size: 2rem
+	}
+
+
+`

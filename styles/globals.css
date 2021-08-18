@@ -85,7 +85,7 @@ h1 {
 
 .tweet {
 	display: grid;
-	grid-template-columns: 48px 1fr;
+	grid-template-columns: 48px 1fr 100px;
 	gap: 1rem;
 	margin-bottom: 2rem;
 }

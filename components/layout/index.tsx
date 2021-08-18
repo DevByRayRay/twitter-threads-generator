@@ -36,7 +36,6 @@ const Layout = (props) => {
 				<link rel='mask-icon' href='/safari-pinned-tab.svg' color='#5bbad5' />
 				<meta name='msapplication-TileColor' content='#ffffff'></meta>
 				<meta name='theme-color' content={'#ffffff'}></meta>
-				<script async defer data-domain='socialuniqorn.com' src='https://plausible.io/js/plausible.js'></script>
 			</Head>
 			{props.children}
 			<Footer />
