@@ -5,7 +5,7 @@ import { iSendingState, sendState } from './types'
 export const StatusMessage = styled.div<iSendingState>`
 	display: inline-block;
 	color: #fff;
-	${(props) => {
+	${props => {
 		if (props.state === sendState.sending) {
 			return 'background-color: orange;'
 		}
@@ -91,11 +91,30 @@ export const TweetImage = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: absolute;
+	left: -9999px;
 
 	> div {
 		text-align: center;
-		font-size: 2rem
+		font-size: 1.5rem;
 	}
+`
 
+export const TweetImageCanvas = styled.div`
+	max-width: 300px;
+	max-height: 300px;
+	object-fit: cover;
 
+	canvas {
+		max-width: 300px;
+		max-height: 300px;
+		object-fit: cover;
+	}
+`
+
+export const Tweet = styled.div`
+	display: grid;
+	grid-template-columns: 48px 1fr 300px;
+	gap: 1rem;
+	margin-bottom: 2rem;
 `

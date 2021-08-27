@@ -31,11 +31,13 @@ function buttonSize (size: eButtonSize) : string {
 }
 
 export const Button = styled.button<IButton>`
-	display: inline-block;
+	display: flex;
+	align-items: center;
 	border-radius: 5px;
 	text-decoration: none;
 	transition: 0.5s ease-in-out;
 	width: auto;
+	cursor: pointer;
 
 	${(props) => (!props.color || props.color === 'default' ? `color:var(--white);background: var(--grey);` : '')}
 	${(props) => (props.color === 'action' ? `color:var(--white);background: var(--main-color);` : '')}
