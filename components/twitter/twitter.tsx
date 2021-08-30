@@ -1,8 +1,6 @@
 import { getUserToken, sendTweetRequest, textToTweets, setUserToken, TToken } from 'lib/twitter.service'
 import React, { useState, useEffect } from 'react'
 import html2canvas from 'html2canvas'
-import Layout from '../layout'
-import PageHeader from '../layout/header'
 import { Button, Textarea, LinkButton, Container } from 'styles/styled'
 import {
 	AppContainer,
@@ -18,7 +16,6 @@ import { Avatar } from '../user/styles'
 import { getUserProfile } from 'lib/user.service'
 import { UserProfileModel, UserType } from 'components/user/types'
 import { Content } from '@components/pages/home/styles'
-import TweetImageComponent from './tweet-image'
 import TweetComponent from './tweet'
 
 const DEFAULT_TWEET = `The thread is generated automatically while you are typing below. 🚀
@@ -111,13 +108,6 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	function generateTweets() {
 		const tweets = textToTweets(tweet, true)
 		setRenderedTweets(tweets)
-	}
-
-	function generateTweetImage(content: string) {
-		if (!content) return
-		if (tweetImage) {
-			setTweetImage(content)
-		}
 	}
 
 	return (

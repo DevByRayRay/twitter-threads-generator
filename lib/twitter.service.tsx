@@ -81,7 +81,6 @@ function clearUserToken() {
 function textToTweets(inputTxt: string, prefix: boolean): string[] {
 	const input = inputTxt.split('\n\n')
 	const filtered = input.filter((item) => {
-		console.log('item: ', item)
 		return item.length > 0
 	})
 	const split = filtered.map((string) => tweetSplitter(string, 276, ''))

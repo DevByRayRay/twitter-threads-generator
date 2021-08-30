@@ -28,9 +28,6 @@ const TweetImageComponent = (props: iTweetImageComp) => {
 		<div className='tweet-image'>
 			{props?.tweetContent && (
 				<>
-					{/* <Button size={'small'} color={'action'}>
-						Download <TiDownload size={26} />
-					</Button> */}
 					<TweetImageContainer>
 						<TweetImage ref={imageContent}>
 							<div>{props?.tweetContent}</div>

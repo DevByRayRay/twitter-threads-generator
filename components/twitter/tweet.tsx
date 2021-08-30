@@ -18,14 +18,32 @@ const TweetLastCol = styled.div`
     grid-template-rows: 1fr auto;
 `
 
+
+
 const TweetComponent = (props: iTweet) => {
 	const { user, item } = props
 
+	const [tweetText, setTweetText] = useState<string>('')
 	const [toggleImage, setToggleImage] = useState<boolean>(true)
 
 	const toggle = () => {
 		setToggleImage(!toggleImage)
 	}
+	
+	useEffect(() => {
+		if (tweetText.toString() !== item.toString()) {
+			setTweetText(item)
+		}
+	})
+
+
+	useEffect(() => {
+		if (tweetText) {
+			setTimeout(() => {
+				setToggleImage(!toggleImage)
+			}, 1000)
+		}
+	}, [tweetText])
 
 	useEffect(() => {
 		if (!toggleImage) {
@@ -41,9 +59,6 @@ const TweetComponent = (props: iTweet) => {
 			<div className='tweet__content'>{item}</div>
 			<TweetLastCol>
 				{toggleImage && <TweetImageComponent tweetContent={item} />}
-				<Button size={'small'} color={'action'} onClick={() => toggle()}>
-					Refresh image <TiRefresh size={26} />
-				</Button>
 			</TweetLastCol>
 		</Tweet>
 	)
