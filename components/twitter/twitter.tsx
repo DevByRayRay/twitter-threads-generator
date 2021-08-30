@@ -1,14 +1,25 @@
 import { getUserToken, sendTweetRequest, textToTweets, setUserToken, TToken } from 'lib/twitter.service'
 import React, { useState, useEffect } from 'react'
+import html2canvas from 'html2canvas'
 import Layout from '../layout'
 import PageHeader from '../layout/header'
 import { Button, Textarea, LinkButton, Container } from 'styles/styled'
-import { AppContainer, AppColumn, SendStatus, UserWarningContent, UserWarning } from './styles'
+import {
+	AppContainer,
+	AppColumn,
+	SendStatus,
+	UserWarningContent,
+	UserWarning,
+	TweetImage,
+	TweetImageContainer
+} from './styles'
 import { sendState } from './types'
 import { Avatar } from '../user/styles'
 import { getUserProfile } from 'lib/user.service'
 import { UserProfileModel, UserType } from 'components/user/types'
 import { Content } from '@components/pages/home/styles'
+import TweetImageComponent from './tweet-image'
+import TweetComponent from './tweet'
 
 const DEFAULT_TWEET = `The thread is generated automatically while you are typing below. 🚀
 
@@ -30,6 +41,7 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	const [postedTweets, setPostedTweets] = useState<any[]>([])
 	const [sendingTweet, setSendingTweet] = useState<sendState | null>(null)
 	const [tweet, setTweet] = useState(DEFAULT_TWEET)
+	const [tweetImage, setTweetImage] = useState<string>('No tweet selected')
 	let sending: sendState | null = null
 
 	const [userProfile, setUserProfile] = useState(user)
@@ -51,8 +63,20 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 		generateTweets()
 	}, [tweet])
 
+	useEffect(() => {
+		if (tweetImage) {
+			const canvasPlaceholder: HTMLElement = document.querySelector('#tweetImageCanvas')
+			const tweetImageContent: HTMLElement = document.querySelector('#tweetImageContent')
+
+			html2canvas(tweetImageContent).then(canvas => {
+				canvasPlaceholder.innerHTML = null
+				canvasPlaceholder.appendChild(canvas)
+			})
+		}
+	}, [tweetImage])
+
 	// Event for updating the tweet state
-	const onChangeTweet = (event) => {
+	const onChangeTweet = event => {
 		setTweet(event.target.value)
 		generateTweets()
 	}
@@ -77,7 +101,7 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 					setSendingTweet(null)
 				}, 3000)
 			})
-			.catch((error) => {
+			.catch(error => {
 				console.error('Didnt send: ', error)
 				setSend(false)
 				setSendingTweet(sendState.error)
@@ -87,6 +111,13 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 	function generateTweets() {
 		const tweets = textToTweets(tweet, true)
 		setRenderedTweets(tweets)
+	}
+
+	function generateTweetImage(content: string) {
+		if (!content) return
+		if (tweetImage) {
+			setTweetImage(content)
+		}
 	}
 
 	return (
@@ -114,7 +145,7 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 						</UserWarningContent>
 					</UserWarning>
 				)}
-				<footer className='footer'>
+				<footer className='footer footer__action'>
 					{userProfile && userProfile.type === UserType.social && (
 						<Button color={'action'} id='generate' onClick={sendTweet}>
 							Send Thread <SendStatus state={sendingTweet}></SendStatus>
@@ -138,18 +169,18 @@ const TwitterApp = ({ FUNCTIONS_BASE_URL, user }) => {
 							</UserWarningContent>
 						</UserWarning>
 					)}
+					<p></p>
+					<p>
+					<strong>You can now download the Tweet image by clicking the right mouse button and save as image 👍</strong>
+				</p>
 				</footer>
 			</AppColumn>
 			<AppColumn className='column--output'>
+				
 				<div id='output'>
 					{renderedTweets &&
 						renderedTweets.map((item, index) => {
-							return (
-								<div key={index} className='tweet'>
-									<Avatar src={user?.picture ?? null} loading='lazy' />
-									<div className='tweet__content'>{item}</div>
-								</div>
-							)
+							return <TweetComponent key={index} user={user} item={item} />
 						})}
 				</div>
 			</AppColumn>

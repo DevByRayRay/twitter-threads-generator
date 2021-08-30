@@ -45,6 +45,13 @@ p {
 	text-align: center;
 }
 
+.footer__action {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
 .column .footer {
 	display: grid;
 	grid-template-columns: 1fr;
@@ -83,13 +90,6 @@ h1 {
 	border: 1px solid #fff;
 }
 
-.tweet {
-	display: grid;
-	grid-template-columns: 48px 1fr;
-	gap: 1rem;
-	margin-bottom: 2rem;
-}
-
 .tweet__profile {
 	width: 48px;
 	height: 48px;
@@ -100,6 +100,7 @@ h1 {
 	padding-top: 0.6rem;
 	padding-bottom: 2rem;
 	line-height: 1.6em;
+	font-size: 2rem;
 	position: relative;
 	border-bottom: 1px solid var(--sec-color);
 }
