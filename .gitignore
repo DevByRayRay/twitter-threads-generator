@@ -10,7 +10,10 @@
 
 # next.js
 /.next/
+/_next
 /out/
+/public
+/functions_build
 
 # production
 /build
@@ -38,3 +41,6 @@ yarn-error.log*
 /out_functions/
 
 .env
+
+# Local Netlify folder
+.netlify

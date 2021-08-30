@@ -1,5 +1,5 @@
 {
-  "name": "twitter-thread-nextjs",
+  "name": "socialuniqorn",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -35,10 +35,10 @@
     "twitter-lite": "^1.1.0",
     "twitter-splitter": "^1.0.0",
     "webpack": "^4.46.0",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.2",
+    "@types/react": "^17.0.19"
   },
   "devDependencies": {
-    "@types/react": "^17.0.19"
   },
   "resolutions": {
     "styled-components": "^5"
